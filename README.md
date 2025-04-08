@@ -1,5 +1,6 @@
 # The-Agile-Web-Project
 
-|Name|Student Number|
-|----|---------------|
-|Michael Baker| 23971718|
+|UWA ID|Name|Github Username|
+|-------------|----|---------------|
+|23971718     |Michael Baker| |
+|23996869     |Alisa Rose|Shinetopia|
