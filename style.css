@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -40,22 +46,41 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
     box-sizing: border-box;
+    padding: 5%;
 }
 
-.intro-container , .sign-in-container {
-    padding: 5%;
-    /* flex: 1;
-    padding: 1rem; */
+.application-context, .sign-in-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.application-context h1, .sign-in-container h1 {
+    margin-bottom: 40px;
+}
+
+.application-context {
+    text-align: center;
+}
+
+#sign-button {
+    margin-top: 10px;
+}
+
+.sign-in-container p {
+    margin-top: 20px;
 }
 
 .vertical-separator {
     width: 3px;
-    height: 90%;
+    height: 100%;
     border-radius: 1px;
-    background-color: rgb(110, 122, 127);
-    margin: 5%;
+    background-color: rgb(132, 143, 147);
+    margin-left: 5%;
+    margin-right: 5%;
 }
