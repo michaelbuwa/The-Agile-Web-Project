@@ -13,7 +13,7 @@ document.getElementById('upload-form').addEventListener('submit', (event) => {
 
   const formData = new FormData(event.target);
   console.log('Color Name:', formData.get('color-name'));
-  console.log('Associations:', formData.get('association1'), formData.get('association2'), formData.get('association3'));
+  console.log('Associations:', formData.get('associations'));
 
   event.target.reset(); // Reset form fields
   document.body.style.backgroundColor = getRandomColor(); // Set new random background color
