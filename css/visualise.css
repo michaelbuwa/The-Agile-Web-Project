@@ -48,7 +48,7 @@ p {
     font-weight: bold;
 }
 
-#coordsDisplay, #closestVectors {
+#coordsDisplay, #closestVectors{
     margin-top: 10px;
     background: rgba(255, 255, 255, 0.9);
     padding: 10px 20px;
