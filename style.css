@@ -58,6 +58,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 3%;
 }
 
 .application-context h1, .sign-in-container h1 {
@@ -74,6 +75,24 @@ body {
 
 .sign-in-container p {
     margin-top: 20px;
+}
+
+/* container changes for sign-up page */
+.alt-style1 {
+    width: 35vw;
+    justify-content: center;
+}
+
+.hold-one-elem {
+    width: 90%;
+}
+
+.hold-one-elem h1 {
+    margin-bottom: 10px;
+}
+
+.hold-one-elem p {
+    font-style: italic;
 }
 
 .vertical-separator {
