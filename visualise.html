@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scatter Plot with RGB Axes</title>
+  <link rel="stylesheet" href="css/visualise.css">
+  <script src="js/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<div id="myDiv"></div>
+<p>Colour selected:</p>
+<div id="coordsDisplay""></div>
+<p>Closest vectors:</p>
+<div id="closestVectors"></div>
+
+
+<script>
+    var x1 = [255, 128, 64, 200, 50];    // Red values
+    var y1 = [0, 128, 255, 100, 200];    // Green values
+    var z1 = [255, 0, 128, 255, 100];    // Blue values
+  
+    var names = ['colour1', 'colour2', 'colour3', 'colour4', 'colour5'];
+    var descriptions = ['description1', 'description2', 'description3', 'description4', 'description5'];
+  
+    var vectors = x1.map(function(x, i) {
+      return {
+        v: [x, y1[i], z1[i]], // <-- Fixed this line!!
+        name: names[i],
+        description: descriptions[i]
+      };
+    });
+  
+    var colors = x1.map(function(x, i) {
+      return `rgb(${x}, ${y1[i]}, ${z1[i]})`;
+    });
+  
+    var data = [{
+      x: x1,
+      y: y1,
+      z: z1,
+      mode: 'markers',
+      type: 'scatter3d',
+      marker: {
+        size: 10,
+        color: colors
+      }
+    }];
+  
+    var layout = {
+      title: 'Colour Graph Scatterplot',
+      scene: {
+        xaxis: { title: 'Red', range: [0, 255] },
+        yaxis: { title: 'Green', range: [0, 255] },
+        zaxis: { title: 'Blue', range: [0, 255] }
+      },
+      margin: { l: 50, r: 50, b: 50, t: 50 }
+    };
+  
+    Plotly.newPlot('myDiv', data, layout);
+  
+    var myPlot = document.getElementById('myDiv');
+    myPlot.on('plotly_click', function(data){
+      var point = data.points[0];
+      var x = point.x;
+      var y = point.y;
+      var z = point.z;
+  
+      var clickedVector = [x, y, z];
+  
+      var matchedVector = vectors.find(vec => 
+        vec.v[0] === x && vec.v[1] === y && vec.v[2] === z
+      );
+  
+      if (matchedVector) {
+        document.getElementById('coordsDisplay').innerHTML = 
+          `Colour name: ${matchedVector.name}<br>
+           Description: ${matchedVector.description}<br>
+           (Red: ${x}, Green: ${y}, Blue: ${z})`;
+      } else {
+        document.getElementById('coordsDisplay').innerHTML = 
+          `Unknown Colour<br> (Red: ${x}, Green: ${y}, Blue: ${z})`;
+      }
+  
+      // Now find the closest vectors
+      var closest = findClosestVectors(vectors, clickedVector);
+  
+      document.getElementById('closestVectors').innerHTML = 
+        closest.map(vec => 
+          `Name: ${vec.name}<br> Description: ${vec.description}<br> (Red: ${vec.v[0]}, Green: ${vec.v[1]}, Blue: ${vec.v[2]})`
+        ).join('<br><br>');
+    });
+  
+    function findClosestVectors(vectors, clickedVector) {
+      // Simple distance function
+      function distance(a, b) {
+        return Math.sqrt(
+          (a[0] - b[0])**2 +
+          (a[1] - b[1])**2 +
+          (a[2] - b[2])**2
+        );
+      }
+  
+      // Sort vectors by distance
+      return vectors
+        .slice()
+        .sort((a, b) => distance(a.v, clickedVector) - distance(b.v, clickedVector))
+        .slice(1, 6); // Top 5 closest (skip 0 because it's itself)
+    }
+  </script>
+
+
+</body>
+</html>
+
