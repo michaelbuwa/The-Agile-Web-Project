@@ -79,20 +79,18 @@ body {
 
 /* container changes for sign-up page */
 .alt-style1 {
-    width: 35vw;
-    justify-content: center;
+    width: 65vw;
 }
 
-.hold-one-elem {
+.sign-up {
+    align-items: flex-start;
+    margin-top: 0;
     width: 90%;
+    margin-right: 10%;
 }
 
-.hold-one-elem h1 {
+.sign-up h1 {
     margin-bottom: 10px;
-}
-
-.hold-one-elem p {
-    font-style: italic;
 }
 
 .vertical-separator {
