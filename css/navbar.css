@@ -4,7 +4,7 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    font-family: Quicksand, sans-serif; 
+    font-family: Quicksand, sans-serif;
 }
 
 /* Apply box-sizing to all elements */
@@ -14,38 +14,31 @@ html, body {
 
 /* Navigation bar styling */
 .navbar {
-    display: block !important; /* Override Bootstrap's flexbox behavior */
-    text-align: left !important; /* Align text to the left */
-    width: 100%; /* Full width */
-    background-color: #b8afaf; /* Background color */
     overflow: hidden; /* Prevent content overflow */
     position: fixed; /* Fix the navbar to the top */
     top: 0; /* Align to the top of the page */
     left: 0; /* Ensure it starts from the left edge */
     z-index: 1000; /* Ensure it stays above other elements */
-    padding: 0;
+    padding: 0; /* Remove padding */
 }
-
 
 /* Navigation links styling */
 .navbar a {
-    float: left !important;
-    padding: 8px 15px !important; /* Adjust padding for thinner height */
-    color: white !important;
-    text-decoration: none !important;
-    font-size: 16px !important; /* Adjust font size */
-    text-align: center !important;
+    float: left;
+    padding: 8px 15px; /* Padding for links */
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
 }
 
-
-/* Hover effect for links */
-.navbar a:hover {
-    background-color: #000;
-}
-
-/* Active link styling */
-.active {
-    background-color: #960c0c;
+/* Hover and active effect for links */
+.navbar a:hover,
+.navbar a.active {
+    text-decoration: underline; /* Add underline */
+    text-underline-offset: 7px; /* Adding the distance of the underline from the text */
+    text-decoration-thickness: 2px; /* Underline thickness */
+    text-decoration-color: white; /* Colour of underline set to white */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
 /* Responsive design for smaller screens */
@@ -53,6 +46,5 @@ html, body {
     .navbar a {
         float: none;
         display: block;
-        text-align: left;
     }
 }
