@@ -1,9 +1,12 @@
+"""
+Just a template from the labs to be altered later
+"""
 from flask import render_template
 from app import app
 @app.route('/')
 @app.route('/index')
 def index():
-	user = {'username': 'Miguel'}
+	user = {'username': 'Michael'}
 	posts = [
 	{
 	'author': {'username': 'John'},
