@@ -8,6 +8,9 @@
         <title>Colour Differentiation Test</title>
     </head>
     <body>
+        <!-- Timer -->
+        <div id="timer" class="hidden">Time Remaining: <span id="time-left">10</span>s</div>
+
         <div class="test-container">
             <h1>Can You Spot The Exact Colour?</h1>
             <p>
@@ -20,10 +23,6 @@
             <button id="start-button"> Start </button>
         </div>
 
-        <!-- Timer -->
-        <div id="timer" class="hidden">Time Remaining: <span id="time-left">10</span>s</div>
-
-
         <!-- Black screen for transition -->
         <div id="black-screen" class="hidden">
             <p id="black-screen-timer"> 
@@ -34,15 +33,15 @@
 
         <!-- Color options -->
         <div id="color-options" class="hidden">
-            <div class="color-container" id="option-1"></div>
-            <div class="color-container" id="option-2"></div>
-            <div class="color-container" id="option-3"></div>
+            <div class="color-container hidden" id="option-1"></div>
+            <div class="color-container hidden" id="option-2"></div>
+            <div class="color-container hidden" id="option-3"></div>
         </div>
 
         <!-- Result -->
         <div id="result" class="hidden">
-            <p id="result-message"></p>
-            <button id="again-button">Again!</button>
+            <div id="result-message"></div>
+            <button id="again-button">Try Again</button>
             <button id="finish-button">Finished</button>
         </div>
 

@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Generate a similar color
   function getSimilarColor(baseColor) {
       const [r, g, b] = baseColor.match(/\d+/g).map(Number);
-      const variation = 20; // Adjust for difficulty
+      const variation = 20; 
       const newR = Math.min(255, Math.max(0, r + (Math.random() > 0.5 ? variation : -variation)));
       const newG = Math.min(255, Math.max(0, g + (Math.random() > 0.5 ? variation : -variation)));
       const newB = Math.min(255, Math.max(0, b + (Math.random() > 0.5 ? variation : -variation)));
@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   startButton.addEventListener('click', () => {
       const initialColor = getRandomColor();
       document.body.style.backgroundColor = initialColor;
+      startButton.classList.add('hidden'); // Hide the start button after generating the color
 
       timer.classList.remove('hidden');
       let time = 10;
@@ -49,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
               timer.classList.add('hidden');
 
               // Set to black screen
-              document.body.style.backgroundColor = 'black';
               blackScreen.classList.remove('hidden');
               blackScreen.style.transform = 'translateY(0)';
 
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       // Hide black screen and reset background
                       blackScreen.style.transform = 'translateY(-100%)';
                       blackScreen.classList.add('hidden');
+                      
                       document.body.style.backgroundColor = '#f4f4f4';
 
                       // Show color options
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                           const option = document.getElementById(`option-${index + 1}`);
                           option.style.backgroundColor = color;
                           option.dataset.color = color;
+                          option.classList.remove('hidden');
                       });
 
                       colorOptions.classList.remove('hidden');
