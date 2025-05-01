@@ -105,12 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
             resultMessage.textContent = 'This color match was correct!';
             resultMessage.style.color = 'green'; // Set feedback text color to green
             resultMessage.classList.add('result-message'); // Apply the CSS class
+            // Log the result in the console
+            console.log(`Random Generated Color: ${selectedColor}`);
+            console.log('Result: correct');
 
         } else {
             e.target.classList.add('incorrect');
             resultMessage.textContent = 'This color match was incorrect!';
             resultMessage.style.color = 'red'; // Set feedback text color to red
             resultMessage.classList.add('result-message'); 
+
+            console.log(`Selected Color: ${selectedColor}`);
+            console.log('Result: incorrect');
         }
 
         // Highlight all color containers to show the correct and incorrect colors
@@ -121,6 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 container.classList.add('incorrect');
             }
         });
+
+        // Log the correct color in the console
+        console.log(`Correct Color: ${correctColor}`);
 
         // Show the result message and hide the color options
         result.classList.remove('hidden');
