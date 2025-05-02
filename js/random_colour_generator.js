@@ -99,6 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   colorOptions.addEventListener('click', (e) => {
     if (e.target.classList.contains('color-container')) {
+        // Remove the 'selected' class from all containers
+        document.querySelectorAll('.color-container').forEach(container => {
+            container.classList.remove('selected');
+        });
+
+        // Add the 'selected' class to the clicked container
+        e.target.classList.add('selected');
+
         // Disable further clicks on the color options
         colorOptions.style.pointerEvents = 'none';
 
@@ -108,19 +116,18 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.classList.add('correct');
             resultMessage.textContent = 'This color match was correct!';
             resultMessage.style.color = 'green'; // Set feedback text color to green
-            resultMessage.classList.add('result-message'); // Apply the CSS class
-            // Log the result in the console
-            console.log(`Random Generated Color: ${selectedColor}`);
-            console.log('Result: correct');
 
+            // Log the result in the console
+            console.log(`Selected Color: ${selectedColor}`);
+            console.log('Result: Correct');
         } else {
             e.target.classList.add('incorrect');
             resultMessage.textContent = 'This color match was incorrect!';
             resultMessage.style.color = 'red'; // Set feedback text color to red
-            resultMessage.classList.add('result-message'); 
 
+            // Log the result in the console
             console.log(`Selected Color: ${selectedColor}`);
-            console.log('Result: incorrect');
+            console.log('Result: Incorrect');
         }
 
         // Highlight all color containers to show the correct and incorrect colors
@@ -138,7 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show the result message and hide the color options
         result.classList.remove('hidden');
         colorOptions.classList.add('hidden');
-        colorOptions.classList.add('disabled');
     }
 });
 

@@ -106,12 +106,12 @@ button {
     display: block; /* Ensures it behaves like a block element */
     text-align: center; /*Centers the text horizontally */
     font-weight: bold; 
-    white-space: wrap;
+    white-space: normal;
 }
 
 /* Hides the timer specifically */
 .timer-hidden {
-    display: none!important; /* Hide the timer */
+    display: none; /* Hide the timer */
 }
 
 
@@ -119,7 +119,11 @@ button {
     display: none; 
   }
 
-  
+
+  .color-container.selected {
+    box-shadow: 0 0 0 8px black; /* Add an outer black border for the container the user selected*/
+}
+
 /* Style for individual color boxes */
 .color-container{
     width: 200px;
@@ -135,7 +139,7 @@ button {
 
 /* Correct and incorrect feedback */
 #result-message {
-    font-style: italic; /* Make the text bold */
+    font-style: italic; /* Make the text italic*/
     font-weight: bold;
     font-size: 24px; /* Increase the font size */
     margin-top: 40px; /* Add some spacing above the message */
