@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start the test
   startButton.addEventListener('click', () => {
+      const navbar = document.getElementById('navbar-placeholder');
+      navbar.style.display = 'none'; // The nav bar is hidden
       const initialColor = getRandomColor();
       document.body.style.backgroundColor = initialColor;
       startButton.classList.add('hidden'); // Hide the start button after generating the color

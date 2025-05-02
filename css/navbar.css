@@ -41,6 +41,22 @@ html, body {
     transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
+/* Hover effect for links on the upload page */
+.upload-page #navbar-placeholder a {
+    color: black !important; /* Always set the font color to black */
+    text-decoration: none; /* Remove underline by default */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.upload-page #navbar-placeholder a:hover,
+.upload-page #navbar-placeholder a.active {
+    color: black !important; /* Ensure the font color remains black on hover */
+    text-decoration: underline; /* Add underline on hover */
+    text-underline-offset: 7px; /* Distance of the underline from the text */
+    text-decoration-thickness: 2px; /* Underline thickness */
+    text-decoration-color: black; /* Set underline color to black */
+}
+
 /* Responsive design for smaller screens */
 @media screen and (max-width: 500px) {
     .navbar a {
