@@ -4,12 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/background.css" rel="stylesheet">
-        <link href="css/background.css" rel="stylesheet"> 
         <title>Colour Differentiation Test</title>
     </head>
     <body>
         <!-- Timer -->
-        <div id="timer" class="hidden">Time Remaining: <span id="time-left">10</span>s</div>
+        <div id="timer" class="timer-hidden">Time Remaining: <span id="time-left">10</span>s</div>
 
         <div class="test-container">
             <h1>Can You Spot The Exact Colour?</h1>
@@ -29,6 +28,11 @@
             Get Ready! <br>
             Time Remaining: 
             <span id="black-time-left">5</span>s</p>
+        </div>
+
+        <!-- Color selection message -->
+        <div id="color-selection" class="hidden">
+            <h2 id="selection-message" class="hidden">Select the color you saw before, from the 3 options below:</h2>
         </div>
 
         <!-- Color options -->

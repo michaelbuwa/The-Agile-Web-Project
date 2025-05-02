@@ -4,12 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const timeLeft = document.getElementById('time-left');
   const blackScreen = document.getElementById('black-screen');
   const blackTimeLeft = document.getElementById('black-time-left');
+  const colorSelection = document.getElementById('color-selection');
   const colorOptions = document.getElementById('color-options');
   const result = document.getElementById('result');
   const resultMessage = document.getElementById('result-message');
   const againButton = document.getElementById('again-button');
   const finishButton = document.getElementById('finish-button');
-
+  
+  
   let correctColor = '';
   let countdown;
 
@@ -36,8 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const initialColor = getRandomColor();
       document.body.style.backgroundColor = initialColor;
       startButton.classList.add('hidden'); // Hide the start button after generating the color
+      document.querySelector('.test-container').classList.add('hidden'); // Hide the test container text
 
-      timer.classList.remove('hidden');
+      timer.classList.remove('timer-hidden');
       let time = 10;
       timeLeft.textContent = time;
 
@@ -47,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (time === 0) {
               clearInterval(countdown);
-              timer.classList.add('hidden');
+              timer.classList.add('timer-hidden'); // Hide the timer when it reaches 0
 
               // Set to black screen
               blackScreen.classList.remove('hidden');
@@ -85,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
                           option.dataset.color = color;
                           option.classList.remove('hidden');
                       });
-
+                      colorSelection.classList.remove('hidden');
+                      document.getElementById('selection-message').classList.remove('hidden');
                       colorOptions.classList.remove('hidden');
                   }
               }, 1000); // 1-second interval
