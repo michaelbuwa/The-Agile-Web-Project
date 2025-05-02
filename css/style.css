@@ -39,7 +39,7 @@ body {
 
 .intro-container {
     width: 80vw;
-    height: 80vh;
+    height: 75vh;
     background-color: white;
     border-radius: 15px;
     position: absolute;
@@ -50,7 +50,7 @@ body {
     align-items: flex-start;
     box-shadow: 0 0 15px rgba(0,0,0,0.3);
     box-sizing: border-box;
-    padding: 5%;
+    padding: 7%;
 }
 
 .application-context, .sign-in-container {
@@ -59,11 +59,16 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 3%;
 }
 
 .application-context h1, .sign-in-container h1 {
     margin-bottom: 40px;
+}
+
+#app-title {
+    font-family: "Fugaz One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .application-context {
@@ -80,14 +85,13 @@ body {
 
 /* container changes for sign-up page */
 .alt-style1 {
-    width: 65vw;
+    width: 35vw;
+    justify-content: center;
 }
 
 .sign-up {
-    align-items: flex-start;
-    margin-top: 0;
     width: 90%;
-    margin-right: 10%;
+    text-align: center;
 }
 
 .sign-up h1 {
@@ -99,6 +103,6 @@ body {
     height: 100%;
     border-radius: 1px;
     background-color: rgb(132, 143, 147);
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 7%;
+    margin-right: 7%;
 }
