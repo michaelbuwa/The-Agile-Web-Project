@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="rainbow-box">
+    <div class="intro-container">
+        <div class="application-context">
+            <h1>Friends Dashboard</h1>
+            <p>Manage your friends list, accept or reject friend requests, and add friends by their username!</p>
+        </div>
+        <div class="vertical-separator"></div>
+        <!-- Add Friend by Username Box -->
+        <div class="add-friend-container">
+            <h2>Add Friend by Username</h2>
+            <form>
+                <div class="mb-2">
+                    <input type="text" class="form-control form-control-lg" placeholder="Enter Username">
+                </div>
+                <button type="submit" class="btn btn-success btn-lg w-100" id="add-friend-button">Add Friend</button>
+            </form>
+        </div>
+        <div class="vertical-separator"></div>
+        <!-- Friend Requests List -->
+        <div class="friend-requests-container">
+            <h2>Friend Requests</h2>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>JohnDoe</span>
+                    <div>
+                        <button class="btn btn-primary btn-sm">Accept</button>
+                        <button class="btn btn-danger btn-sm">Reject</button>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>JaneSmith</span>
+                    <div>
+                        <button class="btn btn-primary btn-sm">Accept</button>
+                        <button class="btn btn-danger btn-sm">Reject</button>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>ColorFan99</span>
+                    <div>
+                        <button class="btn btn-primary btn-sm">Accept</button>
+                        <button class="btn btn-danger btn-sm">Reject</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="vertical-separator"></div>
+        <!-- Friends List -->
+        <div class="friends-container">
+            <h2>Your Friends</h2>
+            <ul class="list-group">
+                <li class="list-group-item">AliceGreen</li>
+                <li class="list-group-item">BobBlue</li>
+                <li class="list-group-item">CharlieYellow</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
