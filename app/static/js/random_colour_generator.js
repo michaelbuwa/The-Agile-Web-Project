@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start the test
   startButton.addEventListener('click', () => {
-      const navbar = document.getElementById('navbar-placeholder');
+      //const navbar = document.getElementById('navbar');
+      const navbar = document.querySelector('.navbar');
       navbar.style.display = 'none'; // The nav bar is hidden
       const initialColor = getRandomColor();
       document.body.style.backgroundColor = initialColor;
@@ -156,7 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   finishButton.addEventListener('click', () => {
-      window.location.href = 'visualise.html';
+      const url = finishButton.dataset.url;
+      window.location.href = url;
   // Redirect to the visualise.html page
   });
 });

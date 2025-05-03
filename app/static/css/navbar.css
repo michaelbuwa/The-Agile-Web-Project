@@ -42,14 +42,14 @@ html, body {
 }
 
 /* Hover effect for links on the upload page */
-.upload-page #navbar-placeholder a {
+.upload-page .navbar a {
     color: black !important; /* Always set the font color to black */
     text-decoration: none; /* Remove underline by default */
     transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.upload-page #navbar-placeholder a:hover,
-.upload-page #navbar-placeholder a.active {
+.upload-page .navbar a:hover,
+.upload-page .navbar a.active {
     color: black !important; /* Ensure the font color remains black on hover */
     text-decoration: underline; /* Add underline on hover */
     text-underline-offset: 7px; /* Distance of the underline from the text */

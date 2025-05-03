@@ -45,7 +45,7 @@
 <div id="result" class="hidden">
     <div id="result-message"></div>
     <button id="again-button">Try Again</button>
-    <button id="finish-button">Finished</button>
+    <button id="finish-button" data-url="{{ url_for('visualise') }}">Finished</button>
 </div>
 
 <script src="{{ url_for('static', filename='js/random_colour_generator.js') }}"></script>
