@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 <!-- extends establishes inheritance link between two templates -->
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+{% endblock %}
 
 {% block content %}
 <div id="rainbow-box">
@@ -27,7 +30,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg w-100" id="sign-button">Perceive colours</button>
             </form>
-            <p>New to Colour Mania? <a href="sign-up.html">Join here!</a></p>
+            <p>New to Colour Mania? <a href="{{ url_for('sign_up') }}">Join here!</a></p>
         </div>
     </div>
 </div>

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
+<!-- for pages' own custom stylesheet -->
 {% block extra_css %}
-<link href="css/background.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/background.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -47,5 +48,5 @@
     <button id="finish-button">Finished</button>
 </div>
 
-<script src="js/random_colour_generator.js"></script>
+<script src="{{ url_for('static', filename='js/random_colour_generator.js') }}"></script>
 {% endblock %}

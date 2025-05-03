@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+{% endblock %}
+
 {% block content %}
 <div id="rainbow-box">
     <div class="intro-container alt-style1">
