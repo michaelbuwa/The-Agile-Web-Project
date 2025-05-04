@@ -2,10 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.gitignore
 # C extensions
 *.so
-
+old_flask
+tests_dir
 # Distribution / packaging
 .Python
 build/
