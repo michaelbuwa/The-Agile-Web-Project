@@ -1,14 +1,37 @@
-<!-- This is the base template from labs we need to change this later -->
-
 {% extends "base.html" %}
-{% block content %}
-  <h1>
-     Hi, {{ user.username }} !
-  </h1> 
-  {% for post in posts %}
-  <div><p>{{ post.author.username }} says: <br>{{ post.body}}</b></p></div>
-  {% endfor %}
+<!-- extends establishes inheritance link between two templates -->
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
 {% endblock %}
-</body>
-</html>
 
+{% block content %}
+<div id="rainbow-box">
+    <div class="intro-container">
+        <div class="application-context">
+            <h1 id="app-title">COLOUR MANIA</h1>
+            <p>Have you ever wondered just how good your eye for colour is?
+                By taking our colour discrimination test, you can find out how
+                accurately you can tell colours apart!
+            </p>
+            <p>Discover which hues you can
+                differentiate best, which hues fly under your radar and an estimation of
+                how many total colours you can see/differentiate between! The more
+                times you take the test, the more accurate the results.</p>
+        </div>
+        <div class="vertical-separator"></div>
+        <div class="sign-in-container">
+            <h1>Sign In</h1>
+            <form>
+                <div class="mb-3">
+                    <input type="username" class="form-control form-control-lg" placeholder="Username">
+                </div>
+                <div class="mb-2">
+                    <input type="password" class="form-control form-control-lg" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100" id="sign-button">Perceive colours</button>
+            </form>
+            <p>New to Colour Mania? <a href="{{ url_for('sign_up') }}">Join here!</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
