@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="rainbow-box">
+    <div class="intro-container alt-style1">
+        <div class="sign-in-container sign-up">
+            <h1>Sign Up</h1>
+            <form>
+                <div class="mb-3">
+                    <p style="font-style: italic;">Almost there!</p>
+                    <input type="username" class="form-control form-control-lg" placeholder="Username">
+                </div>
+                <div class="mb-2">
+                    <input type="password" class="form-control form-control-lg" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100" id="sign-button">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
