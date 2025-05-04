@@ -10,8 +10,8 @@ from app import routes
 """
 Database Flask integration
 """
-from flask import flask
-from flask import Migrate
+from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from app.config import Config
 
