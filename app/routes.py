@@ -1,4 +1,5 @@
 from flask import render_template
+from flask import jsonify
 from app import app
 
 @app.route('/')
@@ -17,3 +18,29 @@ def visualise():
 @app.route('/share')
 def share():
 	return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
+
+
+@app.route('/api/stats')
+def get_stats():
+    # would use actual database query here
+    unlocked_colors = [
+        {'r': 255, 'g': 0, 'b': 0},
+        {'r': 0, 'g': 255, 'b': 0},
+        {'r': 0, 'g': 0, 'b': 255},
+        # etc...
+    ]
+
+    accuracy_table = [
+        {'color': 'Red', 'accuracy': 0.5},
+        {'color': 'Orange', 'accuracy': 0.5},
+        {'color': 'Yellow', 'accuracy': 0.55},
+        {'color': 'Green', 'accuracy': 0.55},
+        {'color': 'Blue', 'accuracy': 0.42},
+        {'color': 'Indigo', 'accuracy': 0.67},
+        {'color': 'Violet', 'accuracy': 0.07},
+    ]
+
+    return jsonify({
+        'unlocked_colors': unlocked_colors,
+        'accuracy_table': accuracy_table
+    })
