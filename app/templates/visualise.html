@@ -5,9 +5,37 @@
 {% endblock %}
 
 {% block content %}
-<!-- visualise html content here -->
 <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
-<div id="myDiv"></div>
 
+<div class="main-container">
+  <!-- Left column -->
+  <div class="sidebar">
+    <h2>Colors Unlocked</h2>
+    <div id="unlocked-count">0</div>
+  </div>
+
+  <!-- Right column -->
+  <div class="graph-section">
+    <div id="myDiv"></div>
+
+    <table class="rainbow-table">
+      <thead>
+        <tr>
+          <th>Color</th>
+          <th>Accuracy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="color: red;">Red</td><td>95%</td></tr>
+        <tr><td style="color: orange;">Orange</td><td>90%</td></tr>
+        <tr><td style="color: yellow;">Yellow</td><td>88%</td></tr>
+        <tr><td style="color: green;">Green</td><td>93%</td></tr>
+        <tr><td style="color: blue;">Blue</td><td>85%</td></tr>
+        <tr><td style="color: indigo;">Indigo</td><td>80%</td></tr>
+        <tr><td style="color: violet;">Violet</td><td>92%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
