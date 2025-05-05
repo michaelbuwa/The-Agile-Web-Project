@@ -24,7 +24,7 @@ def share():
     return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
 
 
-@app.route('/api/stats')
+@application.route('/api/stats')
 def get_stats():
     # would use actual database query here
     unlocked_colors = [
