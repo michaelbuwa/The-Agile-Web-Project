@@ -5,8 +5,9 @@ __pycache__/
 .gitignore
 # C extensions
 *.so
-old_flask
-tests_dir
+
+tests_dir/
+
 # Distribution / packaging
 .Python
 build/
