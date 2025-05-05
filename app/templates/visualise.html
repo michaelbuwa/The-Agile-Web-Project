@@ -6,4 +6,8 @@
 
 {% block content %}
 <!-- visualise html content here -->
+<script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
+<div id="myDiv"></div>
+
 {% endblock %}
