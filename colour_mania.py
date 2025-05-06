@@ -1,3 +1,6 @@
-from app import application
+from app import app
 
-app = application
+
+@app.shell_context_processor
+def make_shell_context():
+    return {'sa': sa, 'so': so, 'db': db, 'User': User, 'Result': Result}
