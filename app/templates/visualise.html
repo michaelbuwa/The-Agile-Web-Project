@@ -8,30 +8,30 @@
 <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
 
-<div class="main-container">
-  <!-- Left column -->
-  <div class="sidebar">
-    <h2>Colors Unlocked</h2>
-    <div id="unlockedCountContainer">
-        Colors Unlocked: <span id="unlockedCount">0</span>
+<div class="visualise-container">
+  <div class="main-container">
+    <!-- Top Left: Unlocked Count -->
+    <div id="unlocked-count-container" class="container-box">
+      <h2>Colors Identified Correctly</h2>
+      <div class="content-wrapper">
+        <!-- the max possible numbers is 16777216 -->
+        <p id="colour-count">5</p>
       </div>
-  </div>
+    </div>
 
-  <!-- Right column -->
-  <div class="graph-section">
-    <div id="myDiv"></div>
+    <!-- Top Right: Gradient -->
+    <div id="gradient" class="container-box">
+      <h2>Gradient</h2>
+      <div id="gradientDisplay"></div>
+    </div>
 
-    <<table id="accuracyTable" class="rainbow-table">
-        <thead>
-          <tr>
-            <th>Color</th>
-            <th>Accuracy</th>
-          </tr>
-        </thead>
-        <tbody id="accuracyTableBody">
-          <!-- JS will populate rows here -->
-        </tbody>
-      </table>
-  </div>
+    <!-- Bottom Left: Unlocked Colours Graph -->
+    <div id="colour-graph" class="container-box"></div>
+
+    <!-- Bottom Right: Swatches -->
+    <div id="swatches" class="container-box">
+      <h2>Colours You Find Tricky</h2>
+      <div id="swatchDisplay"></div>
+    </div>
 </div>
 {% endblock %}

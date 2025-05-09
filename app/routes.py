@@ -17,7 +17,7 @@ def upload():
 
 @application.route('/visualise')
 def visualise():
-    return render_template('visualise.html', title='Data Visualisation', include_navbar=True)
+    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True)
 
 @application.route('/share')
 def share():

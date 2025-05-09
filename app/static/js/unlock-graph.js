@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
           colors.push(`rgb(${r},${g},${b})`);
         });
   
-        Plotly.newPlot('myDiv', [{
+        Plotly.newPlot('colour-graph', [{
           x, y, z,
           mode: 'markers',
           type: 'scatter3d',
@@ -33,23 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
   
         // Display total colors unlocked
-        const unlockedCount = document.getElementById("unlockedCount");
+        const unlockedCount = document.getElementById("unlocked-count");
         if (unlockedCount) unlockedCount.textContent = unlocked_colors.length;
-  
-        // Fill accuracy table
-        const tableBody = document.getElementById("accuracyTableBody");
-        if (tableBody) {
-          tableBody.innerHTML = "";
-          accuracy_table.forEach(row => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td>${row.color}</td>
-              <td>${(row.accuracy * 100).toFixed(2)}%</td>
-            `;
-            tableBody.appendChild(tr);
-          });
-        }
-      })
-      .catch(err => console.error("Failed to fetch stats:", err));
-  });
+        })
+        .catch(err => console.error("Failed to fetch stats:", err));
+      });
   
