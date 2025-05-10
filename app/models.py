@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import login 
 
 # The table to store a list of users and their details
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -23,6 +23,14 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_id(self):
+        return str(self.user_id)
+
+
+@login.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 # The table of each result everyone gets
 class Result(db.Model):

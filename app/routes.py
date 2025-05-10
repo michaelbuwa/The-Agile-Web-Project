@@ -1,30 +1,66 @@
-from flask import render_template
+from flask import render_template, flash, redirect, url_for, request
 from flask import jsonify
-from app import app
+from flask_login import login_required, login_user, logout_user
+from app.forms import LoginForm
+from app.models import User
+from app import app,db
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', title='Colour Mania', include_google_fonts=True, include_bootstrap=True)
+    form = LoginForm()
+    if request.method == "POST":
+        username = form.username.data
+        password = form.password.data
+        registering = form.register.data
+        
+        user = User.query.filter_by(username=username).first()
+        if registering:
+            if user:
+                flash('Username {username} already exists','error')
+            else:
+                user = User(username=username)
+                user.set_password(password)
+                db.session.add(user)
+                db.session.commit() #Save the new user to the database,ensures database is consistent
+                login_user(user)
+                return redirect(url_for('upload'))
+        if not user:
+            flash('Username does not exist','error')
+        elif not user.check_password(password):
+            flash('Incorrect password','error')
+        else:
+            login_user(user)
+            return redirect(url_for('upload'))
+    return render_template('index.html', title='Colour Mania', include_google_fonts=True, include_bootstrap=True,form=form)
 
 @app.route('/sign-up')
 def sign_up():
     return render_template('sign-up.html', title='Sign Up', include_bootstrap=True)
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 @app.route('/upload')
+@login_required
 def upload():
     return render_template('upload.html', title='Colour Differentiation Test', include_navbar=True, body_class='upload-page')
 
 @app.route('/visualise')
+@login_required
 def visualise():
     return render_template('visualise.html', title='Data Visualisation', include_navbar=True)
 
 @app.route('/share')
+@login_required
 def share():
     return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
 
 
 @app.route('/api/stats')
+@login_required
 def get_stats():
     # would use actual database query here
     unlocked_colors = [

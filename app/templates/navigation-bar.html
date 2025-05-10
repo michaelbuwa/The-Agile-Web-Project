@@ -4,4 +4,9 @@
     <a href="{{ url_for('upload') }}"><i class="fas fa-palette"></i> Upload</a> 
     <a href="{{ url_for('visualise') }}"><i class="fas fa-vector-square"></i> Graphs and Statistics</a> 
     <a href="{{ url_for('share') }}"><i class="fas fa-share-alt"></i> Share with Friends</a>
+
+    {% if current_user.is_authenticated %}
+    <span class="navbar-user"><i class="fas fa-user"></i> Logged in as:{{ current_user.username }}</span>
+    {% endif %}
+
 </div>
