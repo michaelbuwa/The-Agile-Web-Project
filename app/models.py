@@ -3,23 +3,32 @@ from app import db
 # The table to store a list of users and their details
 class User(db.Model):
     __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    password_hash = db.Column(db.String(128), nullable=False)
+    correct_matches = db.Column(db.Integer, default=0)
 
-    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(80), nullable=False, unique=True)
-    email = db.Column(db.String(120), unique=True)
-    birth_year = db.Column(db.Integer)
-    nationality = db.Column(db.String(100))
-    colour_blindness = db.Column(db.String(100))
+    game_results = db.relationship('GameResult', backref='user', lazy=True)
+    # One-to-many: this user "owns" these friendship entries
+    friendships = db.relationship('Friendship', backref='owner', lazy=True)
 
-    # Relationship to Results
-    results = db.relationship('Result', backref='user', cascade="all, delete-orphan", lazy=True)
+class Colour(db.Model):
+    __tablename__ = 'colours'
+    id = db.Column(db.Integer, primary_key=True)
+    rgb_val = db.Column(db.String(20), nullable=False) # e.g., "rgb(255, 100, 30)"
 
 # The table of each result everyone gets
-class Result(db.Model):
-    __tablename__ = 'results'
+class GameResult(db.Model):
+    __tablename__ = 'game_results'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    correct_colour_id = db.Column(db.Integer, db.ForeignKey('colours.id'), nullable=False)
+    selected_colour_id = db.Column(db.Integer, db.ForeignKey('colours.id'), nullable=False)
+    is_correct = db.Column(db.Boolean, nullable=False)
+    euclidean_distance = db.Column(db.Float) # Null for correct answers
 
-    result_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
-    colour = db.Column(db.String(20), nullable=False)  # storing as "255,255,255"
-    distance = db.Column(db.Float, nullable=False)
-    correct = db.Column(db.Boolean, nullable=False)
+class Friendship(db.Model):
+    __tablename__ = 'friendships'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # owner
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # the added friend
