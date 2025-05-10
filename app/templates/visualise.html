@@ -21,8 +21,15 @@
 
     <!-- Top Right: Gradient -->
     <div id="gradient" class="container-box">
-      <h2>Gradient</h2>
-      <div id="gradientDisplay"></div>
+      <p id="instructions">Select from the swatches below to see the colour difference of any incorrect matches</p>
+      <div class="content-wrapper hidden">
+        <div class="colour-diff-labels">
+          <h3>Correct Colour</h3>
+          <h3>What You Selected</h3>
+        </div>
+        <div class="gradient-container"></div>
+        <h2 id="euclidean-text">The Euclidean distance (difference) of these two colours is <span id="distance-val">271.26</span></h2>
+      </div>
     </div>
 
     <!-- Bottom Left: Unlocked Colours Graph -->
@@ -30,8 +37,14 @@
 
     <!-- Bottom Right: Swatches -->
     <div id="swatches" class="container-box">
-      <h2>Colours You Find Tricky</h2>
-      <div id="swatchDisplay"></div>
+      <h2 id="label">Colours You Find Tricky</h2>
+      <div class="swatch-grid">
+        <div class="swatch" data-color="red" style="background-color: red;"></div>
+        <div class="swatch" data-color="blue" style="background-color: blue;"></div>
+        <div class="swatch" data-color="green" style="background-color: green;"></div>
+        <div class="swatch" data-color="orange" data-colour="4" style="background-color: orange;"></div>
+        <div class="swatch" data-color="purple" style="background-color: purple;"></div>
+      </div>
     </div>
 </div>
 {% endblock %}
