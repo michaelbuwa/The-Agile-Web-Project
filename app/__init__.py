@@ -1,15 +1,4 @@
-"""
-Template from labs to be altered later
-
-from flask import Flask
-app = Flask(__name__)
-
-from app import routes
-"""
-
-"""
-Database Flask integration
-"""
+#Database Flask integration
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
