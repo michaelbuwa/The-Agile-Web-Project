@@ -8,30 +8,43 @@
 <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
 
-<div class="main-container">
-  <!-- Left column -->
-  <div class="sidebar">
-    <h2>Colors Unlocked</h2>
-    <div id="unlockedCountContainer">
-        Colors Unlocked: <span id="unlockedCount">{{ correct_matches }}</span>
+<div class="visualise-container">
+  <div class="main-container">
+    <!-- Top Left: Unlocked Count -->
+    <div id="unlocked-count-container" class="container-box">
+      <h2>Colors Identified Correctly</h2>
+      <div class="content-wrapper">
+        <!-- the max possible numbers is 16777216 -->
+        <p id="colour-count">5</p>
       </div>
-  </div>
+    </div>
 
-  <!-- Right column -->
-  <div class="graph-section">
-    <div id="myDiv"></div>
+    <!-- Top Right: Gradient -->
+    <div id="gradient" class="container-box">
+      <p id="instructions">Select from the swatches below to see the colour difference of any incorrect matches</p>
+      <div class="content-wrapper hidden">
+        <div class="colour-diff-labels">
+          <h3>Correct Colour</h3>
+          <h3>What You Selected</h3>
+        </div>
+        <div class="gradient-container"></div>
+        <h2 id="euclidean-text">The Euclidean distance (difference) of these two colours is <span id="distance-val">271.26</span></h2>
+      </div>
+    </div>
 
-    <<table id="accuracyTable" class="rainbow-table">
-        <thead>
-          <tr>
-            <th>Color</th>
-            <th>Accuracy</th>
-          </tr>
-        </thead>
-        <tbody id="accuracyTableBody">
-          <!-- JS will populate rows here -->
-        </tbody>
-      </table>
-  </div>
+    <!-- Bottom Left: Unlocked Colours Graph -->
+    <div id="colour-graph" class="container-box"></div>
+
+    <!-- Bottom Right: Swatches -->
+    <div id="swatches" class="container-box">
+      <h2 id="label">Colours You Find Tricky</h2>
+      <div class="swatch-grid">
+        <div class="swatch" data-color="red" style="background-color: red;"></div>
+        <div class="swatch" data-color="blue" style="background-color: blue;"></div>
+        <div class="swatch" data-color="green" style="background-color: green;"></div>
+        <div class="swatch" data-color="orange" data-colour="4" style="background-color: orange;"></div>
+        <div class="swatch" data-color="purple" style="background-color: purple;"></div>
+      </div>
+    </div>
 </div>
 {% endblock %}

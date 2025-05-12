@@ -67,6 +67,7 @@ def visualise():
     user = User.query.get(current_user.id)
     return render_template('visualise.html', title='Data Visualisation', include_navbar=True, correct_matches=user.correct_matches)
 
+
 @app.route('/share')
 @login_required
 def share():
