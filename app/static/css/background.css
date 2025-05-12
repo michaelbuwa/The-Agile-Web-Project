@@ -46,8 +46,8 @@ button {
     border-radius: 8px;
     display: inline-block; 
     text-align: center; /* Center the timer horizontally */
-    margin-top: 20px; /* Add some space above the timer */
-    margin-bottom: 40px; /* Add some space below the timer */
+    margin-top: 40px; /* Add some space above the timer */
+    margin-bottom: 20px; /* Add some space below the timer */
 }
 
 /*Colour selection message*/

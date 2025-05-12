@@ -21,14 +21,31 @@
         <div class="vertical-separator"></div>
         <div class="sign-in-container">
             <h1>Sign In</h1>
-            <form>
+            <form method="POST" action="{{ url_for('index') }}">
+            {{ form.hidden_tag() }}
                 <div class="mb-3">
-                    <input type="username" class="form-control form-control-lg" placeholder="Username">
+                    {{ form.username(class="form-control form-control-lg", placeholder="Username") }}
+                    {% if form.username.errors %}
+                        <div class="error">
+                            {{ form.username.errors[0] }}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="mb-2">
-                    <input type="password" class="form-control form-control-lg" placeholder="Password">
+                    {{ form.password(class="form-control form-control-lg", placeholder="Password") }}
+                    {% if form.password.errors %}
+                        <div class="error">
+                            {{ form.password.errors[0] }}
+                        </div>
+                    {% endif %}
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg w-100" id="sign-button">Perceive colours</button>
+                <div class="form-group">
+                {{ form.register.label }}
+                {{ form.register }}
+                </div>
+                <div class="mb-3">
+                {{ form.submit(class="btn btn-primary btn-lg w-100", id="sign-button") }}
+                </div>
             </form>
             <p>New to Colour Mania? <a href="{{ url_for('sign_up') }}">Join here!</a></p>
         </div>

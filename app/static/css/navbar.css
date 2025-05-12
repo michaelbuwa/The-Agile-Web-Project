@@ -58,6 +58,28 @@ html, body {
     text-decoration-color: black; /* Set underline color to black */
 }
 
+.navbar-user-group {
+    margin-left: auto; /* Push entire group to the right */
+    display: flex;
+    align-items: center;
+    gap: 20px; /* space between user info and button */
+}
+
+.navbar-user {
+    color: black;
+    font-size: 18px;
+}
+
+.logout-btn {
+    margin-top: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-size: 18px;
+}
+
+
 /* Responsive design for smaller screens */
 @media screen and (max-width: 500px) {
     .navbar a {
