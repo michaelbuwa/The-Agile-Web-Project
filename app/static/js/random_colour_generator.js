@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let correctColor = '';
   let countdown;
+  
+  //For tracking correct and incorrect answers
+  let correctGuesses = 0;
+  let incorrectGuesses = 0;
+  const colorTracker = []; // an Array that stores all user results: correct and incorrect guesses
+  // and all options shown to the user
 
   // Generate a random color
   function getRandomColor() {
@@ -116,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedColor = e.target.dataset.color;
 
         if (selectedColor === correctColor) {
+            correctGuesses++; // Increment the correct colour counter
             e.target.classList.add('correct');
             resultMessage.textContent = 'This color match was correct!';
             resultMessage.style.color = 'green'; // Set feedback text color to green
@@ -124,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(`Selected Color: ${selectedColor}`);
             console.log('Result: Correct');
         } else {
+            incorrectGuesses++; //Increment the incorrect colour counter
             e.target.classList.add('incorrect');
             resultMessage.textContent = 'This color match was incorrect!';
             resultMessage.style.color = 'red'; // Set feedback text color to red
@@ -144,6 +152,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Log the correct color in the console
         console.log(`Correct Color: ${correctColor}`);
+
+        const colorsGiven = { // Use the console log to double check results BEFORE sending to the database
+            round: colorTracker.length + 1,
+            selectedColor: selectedColor,
+            correctColor: correctColor,
+            wasCorrect: selectedColor === correctColor,
+            correctCount: correctGuesses,
+            incorrectCount: incorrectGuesses,
+            //Fetch the colors of the options
+            optionIds: ['option-1', 'option-2', 'option-3'].join(', '),
+            optionColors: [
+                document.getElementById('option-1').dataset.color,
+                document.getElementById('option-2').dataset.color,
+                document.getElementById('option-3').dataset.color
+            ].join(' | ')
+          };
+    
+        colorTracker.push(colorsGiven);
+        //Shows in the table format
+        console.table(colorTracker);
 
         // Show the result message and hide the color options
         result.classList.remove('hidden');
