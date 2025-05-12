@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask import jsonify
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from app.forms import LoginForm
 from app.models import User
 from app import app,db
@@ -48,10 +48,24 @@ def logout():
 def upload():
     return render_template('upload.html', title='Colour Differentiation Test', include_navbar=True, body_class='upload-page')
 
+@app.route('/api/update_match', methods=['POST'])
+@login_required
+def update_match():
+    data = request.get_json()
+    is_correct = data.get('is_correct', False)
+
+    # Update the user's correct_matches count if the match is correct
+    if is_correct:
+        current_user.correct_matches += 1
+        db.session.commit()
+
+    return jsonify({'success': True, 'correct_matches': current_user.correct_matches})
+
 @app.route('/visualise')
 @login_required
 def visualise():
-    return render_template('visualise.html', title='Data Visualisation', include_navbar=True)
+    user = User.query.get(current_user.id)
+    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, correct_matches=user.correct_matches)
 
 @app.route('/share')
 @login_required

@@ -32,10 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
   
-        // Display total colors unlocked
-        const unlockedCount = document.getElementById("unlockedCount");
-        if (unlockedCount) unlockedCount.textContent = unlocked_colors.length;
-  
         // Fill accuracy table
         const tableBody = document.getElementById("accuracyTableBody");
         if (tableBody) {
