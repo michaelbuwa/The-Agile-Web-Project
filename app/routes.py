@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask import jsonify
 from flask_login import login_required, login_user, logout_user
-from app.forms import LoginForm
+from app.forms import LoginForm,SignUpForm
 from app.models import User
 from app import app,db
 
@@ -12,19 +12,7 @@ def index():
     if request.method == "POST":
         username = form.username.data
         password = form.password.data
-        registering = form.register.data
-        
         user = User.query.filter_by(username=username).first()
-        if registering:
-            if user:
-                flash('Username {username} already exists','error')
-            else:
-                user = User(username=username)
-                user.set_password(password)
-                db.session.add(user)
-                db.session.commit() #Save the new user to the database,ensures database is consistent
-                login_user(user)
-                return redirect(url_for('upload'))
         if not user:
             flash('Username does not exist','error')
         elif not user.check_password(password):
@@ -34,9 +22,24 @@ def index():
             return redirect(url_for('upload'))
     return render_template('index.html', title='Colour Mania', include_google_fonts=True, include_bootstrap=True,form=form)
 
-@app.route('/sign-up')
+@app.route('/sign-up',methods=['GET', 'POST'])
 def sign_up():
-    return render_template('sign-up.html', title='Sign Up', include_bootstrap=True)
+    form = SignUpForm()
+    if request.method == "POST":
+        username = form.username.data
+        password = form.password.data
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            flash(f'Username {username} already exists', 'error')
+        else:
+            user = User(username=username)
+            user.set_password(password)
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return redirect(url_for('upload'))
+    return render_template('sign-up.html', title='Sign Up', include_bootstrap=True, form=form)
 
 @app.route("/logout")
 def logout():
