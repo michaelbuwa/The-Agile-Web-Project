@@ -119,7 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ is_correct: isCorrect }),
+            body: JSON.stringify({
+                is_correct: isCorrect,
+                selected_color: selectedColor,
+                correct_color: correctColor
+        }),
+
         })
         .then(response => response.json())
         .then(data => {

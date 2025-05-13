@@ -45,18 +45,20 @@ class User(db.Model, UserMixin):
 def load_user(id):
     return User.query.get(id)
 
-class Colour(db.Model, UserMixin):
-    __tablename__ = 'colours'
-    id = db.Column(db.Integer, primary_key=True)
-    rgb_val = db.Column(db.String(20), nullable=False) # e.g., "rgb(255, 100, 30)"
+# class Colour(db.Model, UserMixin):
+#     __tablename__ = 'colours'
+#     id = db.Column(db.Integer, primary_key=True)
+#     rgb_val = db.Column(db.String(20), nullable=False) # e.g., "rgb(255, 100, 30)"
 
 # The table of each result everyone gets
 class GameResult(db.Model, UserMixin):
     __tablename__ = 'game_results'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    correct_colour_id = db.Column(db.Integer, db.ForeignKey('colours.id'), nullable=False)
-    selected_colour_id = db.Column(db.Integer, db.ForeignKey('colours.id'), nullable=False)
+    correct_colour= db.Column(db.String(20), nullable=False)
+    # correct_colour_id = db.Column(db.Integer, db.ForeignKey('colours.id'), nullable=False)
+    # selected_colour_id = db.Column(db.Integer, db.ForeignKey('colours.id'), nullable=False)
+    selected_colour= db.Column(db.String(20), nullable=False)
     is_correct = db.Column(db.Boolean, nullable=False)
     euclidean_distance = db.Column(db.Float) # Null for correct answers
 

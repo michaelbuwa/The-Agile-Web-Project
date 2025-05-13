@@ -1,8 +1,8 @@
-"""Updated models for needed game results and friendships
+"""Initial database
 
-Revision ID: e3ea41f1c57d
+Revision ID: 743a70fe3bff
 Revises: 
-Create Date: 2025-05-12 08:19:52.932918
+Create Date: 2025-05-13 11:47:44.460805
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e3ea41f1c57d'
+revision = '743a70fe3bff'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,8 +35,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('friend_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['friend_id'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['friend_id'], ['users.id'], name ="fk_friendships_friend_id_users"),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name ="fk_friendships_user_id_users"),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('game_results',
@@ -46,9 +46,9 @@ def upgrade():
     sa.Column('selected_colour_id', sa.Integer(), nullable=False),
     sa.Column('is_correct', sa.Boolean(), nullable=False),
     sa.Column('euclidean_distance', sa.Float(), nullable=True),
-    sa.ForeignKeyConstraint(['correct_colour_id'], ['colours.id'], ),
-    sa.ForeignKeyConstraint(['selected_colour_id'], ['colours.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['correct_colour_id'], ['colours.id'], name ="fk_game_results_correct_colour_id_colours"),
+    sa.ForeignKeyConstraint(['selected_colour_id'], ['colours.id'], name ="fk_game_results_selected_colour_id_colours"),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name ="fk_game_results_user_id_users"),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

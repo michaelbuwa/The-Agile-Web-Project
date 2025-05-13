@@ -1,9 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask import jsonify
+from sqlalchemy import func
 from flask_login import login_required, login_user, logout_user, current_user
 from app.forms import LoginForm
-from app.models import User
+from app.models import User, GameResult, Friendship
 from app import app,db
+import math
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
@@ -48,16 +50,44 @@ def logout():
 def upload():
     return render_template('upload.html', title='Colour Differentiation Test', include_navbar=True, body_class='upload-page')
 
+def rgb_string_to_tuple(rgb_str):
+    """Converts 'rgb(123, 45, 67)' to (123, 45, 67)"""
+    return tuple(map(int, rgb_str.strip("rgb() ").split(",")))
+
+
+
 @app.route('/api/update_match', methods=['POST'])
 @login_required
 def update_match():
     data = request.get_json()
     is_correct = data.get('is_correct', False)
+    correct_colour_str = data.get('correct_color')
+    selected_colour_str = data.get('selected_color')
 
     # Update the user's correct_matches count if the match is correct
     if is_correct:
         current_user.correct_matches += 1
         db.session.commit()
+
+    correct_colour_tpl = rgb_string_to_tuple(correct_colour_str)
+    selected_colour_tpl = rgb_string_to_tuple(selected_colour_str)
+
+    #Calculate distance between the two colours
+    distance = None
+    if not is_correct:
+        cr, cg, cb = correct_colour_tpl[0], correct_colour_tpl[1], correct_colour_tpl[2]
+        sr, sg, sb = selected_colour_tpl[0], selected_colour_tpl[1], selected_colour_tpl[2]
+        distance = math.sqrt((cr - sr)**2 + (cg - sg)**2 + (cb - sb)**2)
+    
+    result = GameResult(
+        user_id=current_user.id,
+        correct_colour=correct_colour_str,
+        selected_colour=selected_colour_str,
+        is_correct=is_correct,
+        euclidean_distance=distance
+    )
+    db.session.add(result)
+    db.session.commit()
 
     return jsonify({'success': True, 'correct_matches': current_user.correct_matches})
 
@@ -77,25 +107,24 @@ def share():
 @app.route('/api/stats')
 @login_required
 def get_stats():
-    # would use actual database query here
-    unlocked_colors = [
-        {'r': 255, 'g': 0, 'b': 0},
-        {'r': 0, 'g': 255, 'b': 0},
-        {'r': 0, 'g': 0, 'b': 255},
-        # etc...
-    ]
+    user_id = current_user.id
 
-    accuracy_table = [
-        {'color': 'Red', 'accuracy': 0.5},
-        {'color': 'Orange', 'accuracy': 0.5},
-        {'color': 'Yellow', 'accuracy': 0.55},
-        {'color': 'Green', 'accuracy': 0.55},
-        {'color': 'Blue', 'accuracy': 0.42},
-        {'color': 'Indigo', 'accuracy': 0.67},
-        {'color': 'Violet', 'accuracy': 0.07},
-    ]
-
+    # --- Get unlocked (used) colours for this user ---
+    colours = db.session.query(GameResult.correct_colour).filter_by(user_id=user_id).distinct().all()
+    
+    # # Extract actual colours
+    # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
+    print(colours)
+    unlocked_colors = []
+    for c in colours:
+        rgb_str = c[0]  # Get the string like 'rgb(149, 168, 246)'
+        try:
+            # Strip 'rgb(' and ')' and split into r, g, b
+            r, g, b = map(int, rgb_str.strip('rgb() ').split(','))
+            unlocked_colors.append({'r': r, 'g': g, 'b': b})
+        except Exception as e:
+            print(f"Error parsing color {rgb_str}: {e}")
+        
     return jsonify({
         'unlocked_colors': unlocked_colors,
-        'accuracy_table': accuracy_table
     })
