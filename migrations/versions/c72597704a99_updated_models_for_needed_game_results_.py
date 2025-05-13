@@ -1,8 +1,8 @@
 """Updated models for needed game results and friendships
 
-Revision ID: e3ea41f1c57d
+Revision ID: c72597704a99
 Revises: 
-Create Date: 2025-05-12 08:19:52.932918
+Create Date: 2025-05-13 10:49:14.897439
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e3ea41f1c57d'
+revision = 'c72597704a99'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,12 +42,10 @@ def upgrade():
     op.create_table('game_results',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('correct_colour_id', sa.Integer(), nullable=False),
-    sa.Column('selected_colour_id', sa.Integer(), nullable=False),
+    sa.Column('correct_colour_id', sa.String(length=20), nullable=False),
+    sa.Column('selected_colour_id', sa.String(length=20), nullable=False),
     sa.Column('is_correct', sa.Boolean(), nullable=False),
     sa.Column('euclidean_distance', sa.Float(), nullable=True),
-    sa.ForeignKeyConstraint(['correct_colour_id'], ['colours.id'], ),
-    sa.ForeignKeyConstraint(['selected_colour_id'], ['colours.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
