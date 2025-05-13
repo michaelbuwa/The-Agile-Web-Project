@@ -39,11 +39,9 @@
     <div id="swatches" class="container-box">
       <h2 id="label">Colours You Find Tricky</h2>
       <div class="swatch-grid">
-        <div class="swatch" data-color="red" style="background-color: red;"></div>
-        <div class="swatch" data-color="blue" style="background-color: blue;"></div>
-        <div class="swatch" data-color="green" style="background-color: green;"></div>
-        <div class="swatch" data-color="orange" data-colour="4" style="background-color: orange;"></div>
-        <div class="swatch" data-color="purple" style="background-color: purple;"></div>
+        {% for match in incorrect_matches %}
+          <div class="swatch" style="background-color: {{ match.selected_colour }};" data-color="{{ match.selected_colour }}"></div>
+        {% endfor %}
       </div>
     </div>
 </div>

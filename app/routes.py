@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask import jsonify
 from flask_login import login_required, login_user, logout_user, current_user
 from app.forms import LoginForm
-from app.models import User
+from app.models import User, GameResult, Friendship
 from app import app,db
 
 @app.route('/')
@@ -53,11 +53,23 @@ def upload():
 def update_match():
     data = request.get_json()
     is_correct = data.get('is_correct', False)
+    selected_color = data.get('selected_color')
+    correct_color = data.get('correct_color')
 
     # Update the user's correct_matches count if the match is correct
     if is_correct:
         current_user.correct_matches += 1
-        db.session.commit()
+    else:
+        # Store the incorrect match in the GameResult table
+        game_result = GameResult(
+            user_id=current_user.id,
+            correct_colour=correct_color,
+            selected_colour=selected_color,
+            is_correct=False
+        )
+        db.session.add(game_result)
+
+    db.session.commit()
 
     return jsonify({'success': True, 'correct_matches': current_user.correct_matches})
 
@@ -65,8 +77,15 @@ def update_match():
 @login_required
 def visualise():
     user = User.query.get(current_user.id)
-    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True, correct_matches=user.correct_matches)
-
+    incorrect_matches = GameResult.query.filter_by(user_id=user.id, is_correct=False).all()
+    return render_template(
+        'visualise.html',
+        title='Data Visualisation',
+        include_navbar=True,
+        include_google_fonts=True,
+        correct_matches=user.correct_matches,
+        incorrect_matches=incorrect_matches
+    )
 
 @app.route('/share')
 @login_required
