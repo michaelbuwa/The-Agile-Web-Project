@@ -104,13 +104,19 @@ def share():
     return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
 
 
-@app.route('/api/stats')
+@app.route('/api/unlocked')
 @login_required
 def get_stats():
     user_id = current_user.id
 
     # --- Get unlocked (used) colours for this user ---
-    colours = db.session.query(GameResult.correct_colour).filter_by(user_id=user_id).distinct().all()
+    colours = (
+    db.session.query(GameResult.correct_colour)
+    .filter_by(user_id=user_id)
+    .filter(GameResult.is_correct == True)
+    .distinct()
+    .all()
+)
     
     # # Extract actual colours
     # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
@@ -128,3 +134,53 @@ def get_stats():
     return jsonify({
         'unlocked_colors': unlocked_colors,
     })
+
+# @app.route('/api/incorrect')
+# @login_required
+# def get_stats():
+#     user_id = current_user.id
+
+#     # --- Get unlocked (used) colours for this user ---
+#     colours = db.session.query(GameResult.correct_colour).filter_by(user_id=user_id).distinct().all()
+    
+#     # # Extract actual colours
+#     # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
+#     print(colours)
+#     unlocked_colors = []
+#     for c in colours:
+#         rgb_str = c[0]  # Get the string like 'rgb(149, 168, 246)'
+#         try:
+#             # Strip 'rgb(' and ')' and split into r, g, b
+#             r, g, b = map(int, rgb_str.strip('rgb() ').split(','))
+#             unlocked_colors.append({'r': r, 'g': g, 'b': b})
+#         except Exception as e:
+#             print(f"Error parsing color {rgb_str}: {e}")
+        
+#     return jsonify({
+#         'unlocked_colors': unlocked_colors,
+#     })
+
+# @app.route('/api/distance')
+# @login_required
+# def get_stats():
+#     user_id = current_user.id
+
+#     # --- Get unlocked (used) colours for this user ---
+#     colours = db.session.query(GameResult.correct_colour).filter_by(user_id=user_id).distinct().all()
+    
+#     # # Extract actual colours
+#     # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
+#     print(colours)
+#     unlocked_colors = []
+#     for c in colours:
+#         rgb_str = c[0]  # Get the string like 'rgb(149, 168, 246)'
+#         try:
+#             # Strip 'rgb(' and ')' and split into r, g, b
+#             r, g, b = map(int, rgb_str.strip('rgb() ').split(','))
+#             unlocked_colors.append({'r': r, 'g': g, 'b': b})
+#         except Exception as e:
+#             print(f"Error parsing color {rgb_str}: {e}")
+        
+#     return jsonify({
+#         'unlocked_colors': unlocked_colors,
+#     })

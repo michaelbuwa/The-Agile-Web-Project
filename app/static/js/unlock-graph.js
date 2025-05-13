@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Fetch data for the graph
-  fetch("/api/stats")
+  fetch("/api/unlocked")
     .then(response => response.json())
     .then(data => {
       const { unlocked_colors, accuracy_table } = data;
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const unlockedCount = document.getElementById("unlocked-count");
       if (unlockedCount) unlockedCount.textContent = unlocked_colors.length;
     })
-    .catch(err => console.error("Failed to fetch stats:", err));
+    .catch(err => console.error("Failed to fetch unlocked:", err));
 
   // New functionality: Handle swatch clicks
   const swatches = document.querySelectorAll(".swatch");
