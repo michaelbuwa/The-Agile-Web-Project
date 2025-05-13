@@ -1,65 +1,86 @@
 {% extends "base.html" %}
 
 {% block extra_css %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/share.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 {% endblock %}
 
 {% block content %}
-<div id="rainbow-box">
-    <div class="intro-container">
-        <div class="application-context">
-            <h1>Friends Dashboard</h1>
-            <p>Manage your friends list, accept or reject friend requests, and add friends by their username!</p>
-        </div>
-        <div class="vertical-separator"></div>
-        <!-- Add Friend by Username Box -->
-        <div class="add-friend-container">
-            <h2>Add Friend by Username</h2>
-            <form>
-                <div class="mb-2">
-                    <input type="text" class="form-control form-control-lg" placeholder="Enter Username">
-                </div>
-                <button type="submit" class="btn btn-success btn-lg w-100" id="add-friend-button">Add Friend</button>
-            </form>
-        </div>
-        <div class="vertical-separator"></div>
-        <!-- Friend Requests List -->
-        <div class="friend-requests-container">
-            <h2>Friend Requests</h2>
-            <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>JohnDoe</span>
-                    <div>
-                        <button class="btn btn-primary btn-sm">Accept</button>
-                        <button class="btn btn-danger btn-sm">Reject</button>
-                    </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>JaneSmith</span>
-                    <div>
-                        <button class="btn btn-primary btn-sm">Accept</button>
-                        <button class="btn btn-danger btn-sm">Reject</button>
-                    </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>ColorFan99</span>
-                    <div>
-                        <button class="btn btn-primary btn-sm">Accept</button>
-                        <button class="btn btn-danger btn-sm">Reject</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="vertical-separator"></div>
-        <!-- Friends List -->
-        <div class="friends-container">
-            <h2>Your Friends</h2>
-            <ul class="list-group">
-                <li class="list-group-item">AliceGreen</li>
-                <li class="list-group-item">BobBlue</li>
-                <li class="list-group-item">CharlieYellow</li>
-            </ul>
+<script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
+
+<div class="share-container">
+  <div class="main-container">
+    <!-- Title -->
+    <div class = "container-box">
+        <h1>Share Data</h1>
+    </div>
+
+    <div class = "container-box">
+        <h2>Add friends and send them your results!</h2>
+    </div>
+
+    <div class = "container-box">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="add friend" />
+            <button class="search-button">Add</button>
         </div>
     </div>
-</div>
+      
+    <div class="friends-list-container">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="search friends" />
+            <button class="search-button">Search</button>
+        </div>
+        <ul class="scrollable-list">
+            <li>
+                <span class="friend-name">Friend 1</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 2</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 3</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 4</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 5</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 6</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 7</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 8</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 9</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 10</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 11</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+            <li>
+                <span class="friend-name">Friend 12</span>
+                <a href="#"><i class="fas fa-eye"></i> View</a>
+            </li>
+        </ul>        
+      </div>
 {% endblock %}
