@@ -65,7 +65,7 @@ def update_match():
 @login_required
 def visualise():
     user = User.query.get(current_user.id)
-    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, correct_matches=user.correct_matches)
+    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True, correct_matches=user.correct_matches)
 
 
 @app.route('/share')
