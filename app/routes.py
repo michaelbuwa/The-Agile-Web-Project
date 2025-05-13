@@ -104,7 +104,7 @@ def share():
     return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
 
 
-@app.route('/api/unlocked')
+@app.route('/api/unlocked', methods=['GET'])
 @login_required
 def get_stats():
     user_id = current_user.id
@@ -135,52 +135,66 @@ def get_stats():
         'unlocked_colors': unlocked_colors,
     })
 
-# @app.route('/api/incorrect')
-# @login_required
-# def get_stats():
-#     user_id = current_user.id
+@app.route('/api/incorrect', methods=['GET'])
+@login_required
+def get_incorrect():
+    user_id = current_user.id
 
-#     # --- Get unlocked (used) colours for this user ---
-#     colours = db.session.query(GameResult.correct_colour).filter_by(user_id=user_id).distinct().all()
+    # --- Get unlocked (used) colours for this user ---
+    tricky_colours = (
+    db.session.query(GameResult.correct_colour)
+    .filter_by(user_id=user_id)
+    .filter(GameResult.is_correct == False)
+    .distinct()
+    .all()
+    )
+
+    incorrect_colours = (
+    db.session.query(GameResult.selected_colour)
+    .filter_by(user_id=user_id)
+    .filter(GameResult.is_correct == False)
+    .distinct()
+    .all()
+    )
+
+    dist = (
+    db.session.query(GameResult.euclidean_distance)
+    .filter_by(user_id=user_id)
+    .filter(GameResult.is_correct == False)
+    .distinct()
+    .all()
+    )
     
-#     # # Extract actual colours
-#     # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
-#     print(colours)
-#     unlocked_colors = []
-#     for c in colours:
-#         rgb_str = c[0]  # Get the string like 'rgb(149, 168, 246)'
-#         try:
-#             # Strip 'rgb(' and ')' and split into r, g, b
-#             r, g, b = map(int, rgb_str.strip('rgb() ').split(','))
-#             unlocked_colors.append({'r': r, 'g': g, 'b': b})
-#         except Exception as e:
-#             print(f"Error parsing color {rgb_str}: {e}")
-        
-#     return jsonify({
-#         'unlocked_colors': unlocked_colors,
-#     })
+    colours = []
+    colours = []
 
-# @app.route('/api/distance')
-# @login_required
-# def get_stats():
-#     user_id = current_user.id
+    for c, s, d in zip(tricky_colours, incorrect_colours, dist):
+        try:
+            # Get the string like 'rgb(149, 168, 246)'
+            rgb1_str = c[0]
+            rgb2_str = s[0]
+            d1 = d[0]
 
-#     # --- Get unlocked (used) colours for this user ---
-#     colours = db.session.query(GameResult.correct_colour).filter_by(user_id=user_id).distinct().all()
-    
-#     # # Extract actual colours
-#     # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
-#     print(colours)
-#     unlocked_colors = []
-#     for c in colours:
-#         rgb_str = c[0]  # Get the string like 'rgb(149, 168, 246)'
-#         try:
-#             # Strip 'rgb(' and ')' and split into r, g, b
-#             r, g, b = map(int, rgb_str.strip('rgb() ').split(','))
-#             unlocked_colors.append({'r': r, 'g': g, 'b': b})
-#         except Exception as e:
-#             print(f"Error parsing color {rgb_str}: {e}")
-        
-#     return jsonify({
-#         'unlocked_colors': unlocked_colors,
-#     })
+            # Parse both RGB strings
+            r1, g1, b1 = map(int, rgb1_str.strip('rgb() ').split(','))
+            r2, g2, b2 = map(int, rgb2_str.strip('rgb() ').split(','))
+
+            # Append as a dictionary to the list
+            colours.append({
+                'correct': {'r': r1, 'g': g1, 'b': b1},
+                'selected': {'r': r2, 'g': g2, 'b': b2},
+                'distance': d1
+            })
+
+        except Exception as e:
+            print(f"Error parsing colors: {e}")
+
+    print(colours)
+    return jsonify({
+        'tricky_colors': colours,
+    })
+
+@app.route('/api/distance')
+@login_required
+def get_dist():
+    pass
