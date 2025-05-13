@@ -1,0 +1,182 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(
+        125deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.share-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    padding-top: 40px;
+    gap: 20px;
+
+    box-sizing: border-box;
+}
+
+.main-container {
+    width: 100%;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 12% 12% 12% 55%;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.container-box {
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+    border: 3px solid rgb(132, 143, 147);
+}
+
+.friends-list-container {
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+    border: 3px solid rgb(132, 143, 147);
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 20px;
+    background: linear-gradient(
+        125deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+  }
+  
+  .scrollable-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 32px;
+  }
+
+  .search-container {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-style: italic;
+    color: gray; /* Placeholder color */
+  
+    /* Remove italic + change color when user types */
+  }
+  .search-input:focus {
+    font-style: normal;
+    color: black;
+    outline: none;
+  }
+  
+  .search-button {
+    padding: 8px 14px;
+    background-color: #e0e0e0;
+    color: black;
+    border: 1px solid #999999;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #d5d5d5;
+  }
+  
+  .search-input::placeholder {
+    font-style: italic;
+    color: gray;
+  }
+
+  .scrollable-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .friend-name {
+    flex-grow: 1;
+    color: #ffffff;
+  }
+
+/* Styling for the links containing eye icon */
+.scrollable-list a {
+    text-decoration: none;
+    color: #fff; /* Start as white */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+/* Eye icon */
+.scrollable-list a i {
+    font-size: 24px;
+    color: #fff; /* Start as white */
+    transition: color 0.3s ease;
+}
+
+/* Hover effect: both icon and text turn black */
+.scrollable-list a:hover {
+    color: #000;
+}
+
+.scrollable-list a:hover i {
+    color: #000;
+}
