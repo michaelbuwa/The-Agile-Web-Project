@@ -58,6 +58,8 @@ html, body {
     text-decoration-color: black; /* Set underline color to black */
 }
 
+
+/*Currently signin as and logged in button styling*/
 .navbar-user-group {
     margin-left: auto; /* Push entire group to the right */
     display: flex;
@@ -66,7 +68,7 @@ html, body {
 }
 
 .navbar-user {
-    color: black;
+    color: white;
     font-size: 18px;
 }
 
@@ -75,10 +77,31 @@ html, body {
     background: none;
     border: none;
     cursor: pointer;
+    color: white;
+    font-size: 18px;
+}
+
+/*Upload page specific styling*/
+.upload-page .navbar-user-group {
+    margin-left: auto; /* Push entire group to the right */
+    display: flex;
+    align-items: center;
+    padding: 0;
+    gap: 20px; /* space between user info and button */
+}
+.upload-page .navbar-user {
     color: black;
     font-size: 18px;
 }
 
+.upload-page .logout-btn {
+    margin-top: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-size: 18px;
+}
 
 /* Responsive design for smaller screens */
 @media screen and (max-width: 500px) {
