@@ -154,7 +154,6 @@ body, html {
     color: #ffffff;
   }
 
-/* Styling for the links containing eye icon */
 .scrollable-list a {
     text-decoration: none;
     color: #fff; /* Start as white */
@@ -165,14 +164,12 @@ body, html {
     transition: color 0.3s ease;
 }
 
-/* Eye icon */
 .scrollable-list a i {
     font-size: 24px;
     color: #fff; /* Start as white */
     transition: color 0.3s ease;
 }
 
-/* Hover effect: both icon and text turn black */
 .scrollable-list a:hover {
     color: #000;
 }
