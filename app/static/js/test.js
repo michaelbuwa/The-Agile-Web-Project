@@ -37,7 +37,7 @@ function plotGraph(unlocked_colors) {
     colors.push(`rgb(${r},${g},${b})`);
   });
 
-  Plotly.newPlot('colour-graph', [{
+  Plotly.newPlot('color-graph', [{
     x, y, z,
     mode: 'markers',
     type: 'scatter3d',
@@ -47,7 +47,7 @@ function plotGraph(unlocked_colors) {
       opacity: 0.9
     }
   }], {
-    title: 'Unlocked Colors in RGB Space',
+    title: 'Unlocked Colours in RGB Space',
     scene: {
       xaxis: { title: 'Red', range: [0, 255] },
       yaxis: { title: 'Green', range: [0, 255] },
@@ -70,9 +70,9 @@ function setupSwatches() {
 
   swatches.forEach(swatch => {
     swatch.addEventListener("click", function () {
-      const colour = swatch.getAttribute("data-colour");
+      const color = swatch.getAttribute("data-color");
 
-      if (colour === "4") {
+      if (color === "4") {
         if (contentWrapper) contentWrapper.classList.remove("hidden");
         if (instructions) instructions.style.display = "none";
       }

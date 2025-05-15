@@ -54,35 +54,33 @@ def rgb_string_to_tuple(rgb_str):
     """Converts 'rgb(123, 45, 67)' to (123, 45, 67)"""
     return tuple(map(int, rgb_str.strip("rgb() ").split(",")))
 
-
-
 @app.route('/api/update_match', methods=['POST'])
 @login_required
 def update_match():
     data = request.get_json()
     is_correct = data.get('is_correct', False)
-    correct_colour_str = data.get('correct_color')
-    selected_colour_str = data.get('selected_color')
+    correct_color_str = data.get('correct_color')
+    selected_color_str = data.get('selected_color')
 
     # Update the user's correct_matches count if the match is correct
     if is_correct:
         current_user.correct_matches += 1
         db.session.commit()
 
-    correct_colour_tpl = rgb_string_to_tuple(correct_colour_str)
-    selected_colour_tpl = rgb_string_to_tuple(selected_colour_str)
+    correct_color_tpl = rgb_string_to_tuple(correct_color_str)
+    selected_color_tpl = rgb_string_to_tuple(selected_color_str)
 
-    #Calculate distance between the two colours
+    #Calculate distance between the two colors
     distance = None
     if not is_correct:
-        cr, cg, cb = correct_colour_tpl[0], correct_colour_tpl[1], correct_colour_tpl[2]
-        sr, sg, sb = selected_colour_tpl[0], selected_colour_tpl[1], selected_colour_tpl[2]
+        cr, cg, cb = correct_color_tpl[0], correct_color_tpl[1], correct_color_tpl[2]
+        sr, sg, sb = selected_color_tpl[0], selected_color_tpl[1], selected_color_tpl[2]
         distance = math.sqrt((cr - sr)**2 + (cg - sg)**2 + (cb - sb)**2)
     
     result = GameResult(
         user_id=current_user.id,
-        correct_colour=correct_colour_str,
-        selected_colour=selected_colour_str,
+        correct_color=correct_color_str,
+        selected_color=selected_color_str,
         is_correct=is_correct,
         euclidean_distance=distance
     )
@@ -95,7 +93,7 @@ def update_match():
 @login_required
 def visualise():
     user = User.query.get(current_user.id)
-    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, correct_matches=user.correct_matches)
+    return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True, correct_matches=user.correct_matches)
 
 
 @app.route('/share')
@@ -109,20 +107,20 @@ def share():
 def get_stats():
     user_id = current_user.id
 
-    # --- Get unlocked (used) colours for this user ---
-    colours = (
-    db.session.query(GameResult.correct_colour)
+    # --- Get unlocked (used) colors for this user ---
+    colors = (
+    db.session.query(GameResult.correct_color)
     .filter_by(user_id=user_id)
     .filter(GameResult.is_correct == True)
     .distinct()
     .all()
 )
     
-    # # Extract actual colours
-    # colours = Colour.query.filter(GameResult..in_(colour_ids)).all()
-    print(colours)
+    # # Extract actual colors
+    # colors = Color.query.filter(GameResult..in_(color_ids)).all()
+    print(colors)
     unlocked_colors = []
-    for c in colours:
+    for c in colors:
         rgb_str = c[0]  # Get the string like 'rgb(149, 168, 246)'
         try:
             # Strip 'rgb(' and ')' and split into r, g, b
@@ -140,17 +138,17 @@ def get_stats():
 def get_incorrect():
     user_id = current_user.id
 
-    # --- Get unlocked (used) colours for this user ---
-    tricky_colours = (
-    db.session.query(GameResult.correct_colour)
+    # --- Get unlocked (used) colors for this user ---
+    tricky_colors = (
+    db.session.query(GameResult.correct_color)
     .filter_by(user_id=user_id)
     .filter(GameResult.is_correct == False)
     .distinct()
     .all()
     )
 
-    incorrect_colours = (
-    db.session.query(GameResult.selected_colour)
+    incorrect_colors = (
+    db.session.query(GameResult.selected_color)
     .filter_by(user_id=user_id)
     .filter(GameResult.is_correct == False)
     .distinct()
@@ -165,10 +163,10 @@ def get_incorrect():
     .all()
     )
     
-    colours = []
-    colours = []
+    colors = []
+    colors = []
 
-    for c, s, d in zip(tricky_colours, incorrect_colours, dist):
+    for c, s, d in zip(tricky_colors, incorrect_colors, dist):
         try:
             # Get the string like 'rgb(149, 168, 246)'
             rgb1_str = c[0]
@@ -180,7 +178,7 @@ def get_incorrect():
             r2, g2, b2 = map(int, rgb2_str.strip('rgb() ').split(','))
 
             # Append as a dictionary to the list
-            colours.append({
+            colors.append({
                 'correct': {'r': r1, 'g': g1, 'b': b1},
                 'selected': {'r': r2, 'g': g2, 'b': b2},
                 'distance': d1
@@ -189,9 +187,9 @@ def get_incorrect():
         except Exception as e:
             print(f"Error parsing colors: {e}")
 
-    print(colours)
+    print(colors)
     return jsonify({
-        'tricky_colors': colours,
+        'tricky_colors': colors,
     })
 
 @app.route('/api/distance')
