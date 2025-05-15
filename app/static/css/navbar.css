@@ -16,6 +16,7 @@ html, body {
 /* Navigation bar styling */
 .navbar {
     display: flex;
+    width: 100%;  /* Full width */
     overflow: hidden; /* Prevent content overflow */
     position: fixed; /* Fix the navbar to the top */
     top: 0; /* Align to the top of the page */
@@ -59,9 +60,10 @@ html, body {
 }
 
 
-/*Currently signin as and logged in button styling*/
+/*Currently signed in as and logged in button styling*/
 .navbar-user-group {
     margin-left: auto; /* Push entire group to the right */
+    margin-right: 10px; /* Add spacing from right edge */
     display: flex;
     align-items: center;
     gap: 20px; /* space between user info and button */
