@@ -109,6 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
   colorOptions.addEventListener('click', (e) => {
     if (e.target.classList.contains('color-container')) {
         const selectedColor = e.target.dataset.color;
+        // Remove the 'selected' class from all containers
+        document.querySelectorAll('.color-container').forEach(container => {
+            container.classList.remove('selected');
+        });
+
+        // Add the 'selected' class to the clicked container
+        e.target.classList.add('selected');
+
+        // Disable further clicks on the color options
+        colorOptions.style.pointerEvents = 'none';
 
         // Determine if the match is correct
         const isCorrect = selectedColor === correctColor;
