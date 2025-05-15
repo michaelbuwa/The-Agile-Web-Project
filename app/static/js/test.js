@@ -1,5 +1,42 @@
 let incorrectData = [];
 
+function setupSwatches() {
+    const swatchGrid = document.getElementById("swatch-grid");
+    const contentWrapper = document.querySelector(".content-wrapper");
+    const instructions = document.getElementById("instructions");
+    const gradientContainer = document.querySelector(".gradient-container");
+    const distanceVal = document.getElementById("distance-val");
+
+    swatchGrid.innerHTML = ""; // Clear any existing content
+
+    incorrectData.forEach((item, index) => {
+      const { correct, selected, distance } = item;
+
+      // Create swatch element
+      const swatch = document.createElement("div");
+      swatch.className = "swatch";
+      swatch.style.backgroundColor = `rgb(${selected.r}, ${selected.g}, ${selected.b})`;
+      swatch.title = `Click to compare`;
+
+      // Add click handler
+      swatch.addEventListener("click", () => {
+        if (contentWrapper) contentWrapper.classList.remove("hidden");
+        if (instructions) instructions.style.display = "none";
+
+        // Update gradient display
+        gradientContainer.innerHTML = `
+          <div class="colour-box" style="background-color: rgb(${correct.r}, ${correct.g}, ${correct.b});"></div>
+          <div class="colour-box" style="background-color: rgb(${selected.r}, ${selected.g}, ${selected.b});"></div>
+        `;
+
+        // Update distance
+        distanceVal.textContent = distance.toFixed(2);
+      });
+
+      swatchGrid.appendChild(swatch);
+    });
+  }
+
 document.addEventListener("DOMContentLoaded", function () {
   // Fetch data for the graph
   fetchUnlockedData().then(data => {
@@ -11,13 +48,14 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("/api/incorrect")
     .then(res => res.json())
     .then(data => {
-      incorrectData = data.tricky_colors; // Save it for use when swatches are clicked
+      incorrectData = data.tricky_colors;
+      setupSwatches(); // Call only after data is ready
     })
     .catch(err => console.error("Error fetching incorrect colours:", err));
 
 
-  // Handle swatch clicks
-  setupSwatches();
+
+  
 });
 
 // Function to fetch unlocked color data
@@ -62,20 +100,4 @@ function updateUnlockedCount(count) {
   if (unlockedCount) unlockedCount.textContent = count;
 }
 
-// Function to handle swatch clicks
-function setupSwatches() {
-  const swatches = document.querySelectorAll(".swatch");
-  const contentWrapper = document.querySelector(".content-wrapper");
-  const instructions = document.getElementById("instructions");
 
-  swatches.forEach(swatch => {
-    swatch.addEventListener("click", function () {
-      const color = swatch.getAttribute("data-color");
-
-      if (color === "4") {
-        if (contentWrapper) contentWrapper.classList.remove("hidden");
-        if (instructions) instructions.style.display = "none";
-      }
-    });
-  });
-}
