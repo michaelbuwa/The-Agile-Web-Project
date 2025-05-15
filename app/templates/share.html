@@ -18,6 +18,7 @@
         <div class="search-container">
             <input type="text" class="search-input" placeholder="add friend" />
             <button class="search-button">Add</button>
+            <ul id="suggestions-list" class="suggestions-list"></ul>
         </div>
     </div>
     <div class="friends-list-container">
@@ -76,4 +77,5 @@
             </li>
         </ul>        
       </div>
+    <script src="{{ url_for('static', filename='js/add-friend.js') }}"></script>
 {% endblock %}

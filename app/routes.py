@@ -105,6 +105,20 @@ def share():
     return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
 
 
+@app.route('/api/search_users')
+@login_required
+def search_users():
+    query = request.args.get('q', '').strip().lower()
+    if not query:
+        return jsonify([])
+
+    matching_users = User.query.filter(
+        User.username.ilike(f'%{query}%'),
+        User.username != current_user.username
+    ).limit(10).all()
+
+    return jsonify([user.username for user in matching_users])
+
 @app.route('/api/unlocked', methods=['GET'])
 @login_required
 def get_stats():
