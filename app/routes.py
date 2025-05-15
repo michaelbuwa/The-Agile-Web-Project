@@ -133,64 +133,40 @@ def get_stats():
         'unlocked_colors': unlocked_colors,
     })
 
+
 @app.route('/api/incorrect', methods=['GET'])
 @login_required
 def get_incorrect():
     user_id = current_user.id
 
-    # --- Get unlocked (used) colors for this user ---
-    tricky_colors = (
-    db.session.query(GameResult.correct_color)
-    .filter_by(user_id=user_id)
-    .filter(GameResult.is_correct == False)
-    .distinct()
-    .all()
+    results = (
+        db.session.query(GameResult)
+        .filter_by(user_id=user_id)
+        .filter(GameResult.is_correct == False)
+        .all()
     )
 
-    incorrect_colors = (
-    db.session.query(GameResult.selected_color)
-    .filter_by(user_id=user_id)
-    .filter(GameResult.is_correct == False)
-    .distinct()
-    .all()
-    )
-
-    dist = (
-    db.session.query(GameResult.euclidean_distance)
-    .filter_by(user_id=user_id)
-    .filter(GameResult.is_correct == False)
-    .distinct()
-    .all()
-    )
-    
     colors = []
-    colors = []
-
-    for c, s, d in zip(tricky_colors, incorrect_colors, dist):
+    for result in results:
         try:
-            # Get the string like 'rgb(149, 168, 246)'
-            rgb1_str = c[0]
-            rgb2_str = s[0]
-            d1 = d[0]
+            correct_color = result.correct_color
+            selected_color = result.selected_color
+            distance = result.euclidean_distance
 
-            # Parse both RGB strings
-            r1, g1, b1 = map(int, rgb1_str.strip('rgb() ').split(','))
-            r2, g2, b2 = map(int, rgb2_str.strip('rgb() ').split(','))
+            r1, g1, b1 = map(int, correct_color.strip('rgb() ').split(','))
+            r2, g2, b2 = map(int, selected_color.strip('rgb() ').split(','))
 
-            # Append as a dictionary to the list
             colors.append({
                 'correct': {'r': r1, 'g': g1, 'b': b1},
                 'selected': {'r': r2, 'g': g2, 'b': b2},
-                'distance': d1
+                'distance': distance
             })
 
         except Exception as e:
-            print(f"Error parsing colors: {e}")
+            print(f"Error parsing color: {e}")
 
-    print(colors)
-    return jsonify({
-        'tricky_colors': colors,
-    })
+    return jsonify({'tricky_colors': colors})
+
 
 @app.route('/api/distance')
 @login_required
