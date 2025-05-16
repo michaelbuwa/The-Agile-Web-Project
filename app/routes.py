@@ -11,7 +11,7 @@ import math
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     form = LoginForm()
-    if request.method == "POST":
+    if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
         user = User.query.filter_by(username=username).first()
@@ -27,7 +27,7 @@ def index():
 @app.route('/sign-up',methods=['GET', 'POST'])
 def sign_up():
     form = SignUpForm()
-    if request.method == "POST":
+    if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
 
