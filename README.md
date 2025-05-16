@@ -24,5 +24,28 @@ Users can selectively choose to share their results with other users and view fr
 |23401613     |Suha Shahid |anonss78|
 |23792503     |Max Macey|MaxMacey|
 
+### How to Launch our Application
+The following is expected to run in a Linux system and has been tested with Ubuntu-20.04 (WSL).
+```
+$ sudo apt-get install python3
+$ sudo apt-get install python3-pip
+```
+Make sure you're in the project's root directory and make a new virtual environment
+```
+$ python3 -m venv venv
+```
+Activate the new environment and install any requirements:
+```
+$ source venv/bin/activate
+(venv) $ pip install -r requirements.txt
+```
+Set the environment variable
+```
+(venv) $ export FLASK_APP=colour_mania.py
+```
+Finally, run our application!
+```
+(venv) $ flask run
+```
 ## Acknowledgements
 AI tools ChatGPT and GitHub Copilot were used for assistance in suggesting model designs, routing and JS logic for DOM Manipulation (OpenAI, 2025).
