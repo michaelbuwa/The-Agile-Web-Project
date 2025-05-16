@@ -73,6 +73,18 @@ class UserTests(unittest.TestCase):
         loaded = load_user(user.id)
         self.assertEqual(loaded.username, "henry")
 
+    def test_user_deletion_cascades_friendships(self):
+        #Tests that deleting a user also deletes their friendships
+        user1 = self.addUser("alice", "pw1")
+        user2 = self.addUser("bob", "pw2")
+        from app.models import Friendship
+        friendship = Friendship(user_id=user1.id, friend_id=user2.id)
+        db.session.add(friendship)
+        db.session.commit()
+        db.session.delete(user1)
+        db.session.commit()
+        self.assertIsNone(Friendship.query.filter_by(user_id=user1.id).first())
+
     def tearDown(self):
         db.session.remove()
         db.drop_all()
