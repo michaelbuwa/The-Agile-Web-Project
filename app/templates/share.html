@@ -14,11 +14,13 @@
     <div class = "container-box">
         <h2>Add friends to send them your results!</h2>
     </div>
-    <div class = "container-box">
+    <div class="container-box">
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="add friend" />
+            <div class="input-suggestion-wrapper">
+                <input type="text" class="search-input" placeholder="add friend" />
+                <ul id="suggestions-list" class="suggestions-list"></ul>
+            </div>
             <button class="search-button">Add</button>
-            <ul id="suggestions-list" class="suggestions-list"></ul>
         </div>
     </div>
     <div class="friends-list-container">
