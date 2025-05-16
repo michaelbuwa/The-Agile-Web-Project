@@ -24,7 +24,7 @@ Users can selectively choose to share their results with other users and view fr
 |23401613     |Suha Shahid |anonss78|
 |23792503     |Max Macey|MaxMacey|
 
-## How to Launch our Application
+## How to Launch Our Application
 The following is expected to run in a Linux system and has been tested with Ubuntu-20.04 (WSL).
 ```
 $ sudo apt-get install python3
