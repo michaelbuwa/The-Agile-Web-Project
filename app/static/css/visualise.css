@@ -145,6 +145,6 @@ body, html {
 
 /* Commented out to show how the final implementation would look like.
 Uncomment once flask, database and jinja functionality is linked */
-/* .hidden {
+.hidden {
     display: none;
-} */
+}
