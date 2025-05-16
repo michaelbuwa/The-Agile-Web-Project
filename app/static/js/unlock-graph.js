@@ -2,7 +2,7 @@ let incorrectData = [];
 
 function setupSwatches() {
     const swatchGrid = document.getElementById("swatch-grid");
-    const contentWrapper = document.querySelector(".content-wrapper");
+    const contentWrapper = document.querySelector("#gradient .content-wrapper");
     const instructions = document.getElementById("instructions");
     const gradientContainer = document.querySelector(".gradient-container");
     const distanceVal = document.getElementById("distance-val");
@@ -28,11 +28,9 @@ function setupSwatches() {
       const selectedColor = `rgb(${selected.r}, ${selected.g}, ${selected.b})`;
 
       gradientContainer.style.background = `linear-gradient(90deg, ${correctColor} 0%, ${selectedColor} 100%)`;
-      gradientContainer.innerHTML = ""; // Clear children if you're not using colour-boxes anymore
-
-
-        // Update distance
-        distanceVal.textContent = distance.toFixed(2);
+      
+      // Update distance
+      distanceVal.textContent = (typeof distance === "number") ? distance.toFixed(2) : "N/A";
       });
 
       swatchGrid.appendChild(swatch);
