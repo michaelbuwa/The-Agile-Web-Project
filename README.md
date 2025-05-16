@@ -24,7 +24,7 @@ Users can selectively choose to share their results with other users and view fr
 |23401613     |Suha Shahid |anonss78|
 |23792503     |Max Macey|MaxMacey|
 
-### How to Launch our Application
+## How to Launch our Application
 The following is expected to run in a Linux system and has been tested with Ubuntu-20.04 (WSL).
 ```
 $ sudo apt-get install python3
@@ -47,5 +47,8 @@ Finally, run our application!
 ```
 (venv) $ flask run
 ```
+## How to Run Tests
+
+
 ## Acknowledgements
 AI tools ChatGPT and GitHub Copilot were used for assistance in suggesting model designs, routing and JS logic for DOM Manipulation (OpenAI, 2025).
