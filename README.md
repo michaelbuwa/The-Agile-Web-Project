@@ -17,6 +17,7 @@ On the left side of the page, it will tell you how many colours you've correctly
 ### Share With Friends Page
 Users can selectively choose to share their results with other users and view friend's results if shared to.
 
+---
 |UWA ID|Name|Github Username|
 |-------------|----|---------------|
 |23971718     |Michael Baker| michaelbuwa |
