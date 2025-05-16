@@ -48,7 +48,8 @@ Finally, run our application!
 ```
 (venv) $ flask run
 ```
-## How to Run Tests
+## How to Run Unit Tests
+Inside your virtual environment run
 ```
 python -m unittest app.tests.unit-tests
 ```
