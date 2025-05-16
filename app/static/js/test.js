@@ -24,10 +24,12 @@ function setupSwatches() {
         if (instructions) instructions.style.display = "none";
 
         // Update gradient display
-        gradientContainer.innerHTML = `
-          <div class="colour-box" style="background-color: rgb(${correct.r}, ${correct.g}, ${correct.b});"></div>
-          <div class="colour-box" style="background-color: rgb(${selected.r}, ${selected.g}, ${selected.b});"></div>
-        `;
+        const correctColor = `rgb(${correct.r}, ${correct.g}, ${correct.b})`;
+      const selectedColor = `rgb(${selected.r}, ${selected.g}, ${selected.b})`;
+
+      gradientContainer.style.background = `linear-gradient(90deg, ${correctColor} 0%, ${selectedColor} 100%)`;
+      gradientContainer.innerHTML = ""; // Clear children if you're not using colour-boxes anymore
+
 
         // Update distance
         distanceVal.textContent = distance.toFixed(2);
