@@ -98,12 +98,56 @@ def visualise():
     user = User.query.get(current_user.id)
     return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True, correct_matches=user.correct_matches)
 
+@app.route('/visualise/<int:user_id>')
+@login_required
+def visualise_friend(user_id):
+    # Only allow if this user is your friend (has added you)
+    friendship = Friendship.query.filter_by(friend_id=current_user.id, user_id=user_id).first()
+    if not friendship:
+        flash("You do not have permission to view this data.", 'error')
+        return redirect(url_for('share'))
+
+    friend = User.query.get_or_404(user_id)
+    return render_template(
+        'visualise.html',
+        title=f"{friend.username}'s Data Visualisation",
+        include_navbar=True,
+        include_google_fonts=True,
+        correct_matches=friend.correct_matches,
+        friend_username=friend.username,
+        friend_id=friend.id
+    )
 
 @app.route('/share')
 @login_required
 def share():
-    return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
+    # Get all users who have added the current user as a friend
+    friend_requests = Friendship.query.filter_by(friend_id=current_user.id).all()
+    requesters = [User.query.get(f.user_id) for f in friend_requests]
+    return render_template(
+        'share.html',
+        title='Share',
+        include_navbar=True,
+        include_bootstrap=True,
+        requesters=requesters  # Pass to template
+    )
 
+@app.route('/api/add_friend', methods=['POST'])
+@login_required
+def add_friend():
+    data = request.get_json()
+    username = data.get('username')
+    friend = User.query.filter_by(username=username).first()
+    if not friend or friend.id == current_user.id:
+        return jsonify({'success': False, 'message': 'Invalid user.'}), 400
+    # Prevent duplicates
+    existing = Friendship.query.filter_by(user_id=current_user.id, friend_id=friend.id).first()
+    if existing:
+        return jsonify({'success': False, 'message': 'Already friends.'}), 400
+    friendship = Friendship(user_id=current_user.id, friend_id=friend.id)
+    db.session.add(friendship)
+    db.session.commit()
+    return jsonify({'success': True})
 
 @app.route('/api/search_users')
 @login_required
@@ -122,7 +166,7 @@ def search_users():
 @app.route('/api/unlocked', methods=['GET'])
 @login_required
 def get_stats():
-    user_id = current_user.id
+    user_id = request.args.get('user_id', type=int) or current_user.id
 
     # --- Get unlocked (used) colors for this user ---
     colors = (
@@ -154,7 +198,7 @@ def get_stats():
 @app.route('/api/incorrect', methods=['GET'])
 @login_required
 def get_incorrect():
-    user_id = current_user.id
+    user_id = request.args.get('user_id', type=int) or current_user.id
 
     results = (
         db.session.query(GameResult)

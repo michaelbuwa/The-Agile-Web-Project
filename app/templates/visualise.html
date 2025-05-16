@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block content %}
+{% if friend_id is defined %}
+<script>
+  window.friendId = {{ friend_id|tojson }};
+</script>
+{% else %}
+<script>
+  window.friendId = null;
+</script>
+{% endif %}
 <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
 
@@ -34,10 +43,16 @@
 
     <!-- Bottom Left: Unlocked Colours Graph -->
     <div id="color-graph" class="container-box"></div>
-
+      
     <!-- Bottom Right: Swatches -->
     <div id="swatches" class="container-box">
-      <h2 id="label">Colours You Find Tricky</h2>
+      <h2 id="label">
+        {% if friend_username %}
+          Colours {{ friend_username }} Finds Tricky
+        {% else %}
+          Colours You Find Tricky
+        {% endif %}
+      </h2>
       <div class="swatch-grid" id="swatch-grid">
         <!-- Swatches will be inserted here dynamically -->
       </div>

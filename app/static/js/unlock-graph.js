@@ -21,16 +21,15 @@ function setupSwatches() {
       // Add click handler
       swatch.addEventListener("click", () => {
         if (contentWrapper) contentWrapper.classList.remove("hidden");
-
+        if (instructions) instructions.style.display = "none";
 
         // Update gradient display
         const correctColor = `rgb(${correct.r}, ${correct.g}, ${correct.b})`;
       const selectedColor = `rgb(${selected.r}, ${selected.g}, ${selected.b})`;
 
       gradientContainer.style.background = `linear-gradient(90deg, ${correctColor} 0%, ${selectedColor} 100%)`;
-
-
-        // Update distance
+      
+      // Update distance
       distanceVal.textContent = (typeof distance === "number") ? distance.toFixed(2) : "N/A";
       });
 
@@ -39,14 +38,17 @@ function setupSwatches() {
   }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Use friendId from the global window object set in the template
+  const friendId = window.friendId;
+
   // Fetch data for the graph
-  fetchUnlockedData().then(data => {
+  fetchUnlockedData(friendId).then(data => {
     const { unlocked_colors, accuracy_table } = data;
     plotGraph(unlocked_colors);
     updateUnlockedCount(unlocked_colors.length);
   }).catch(err => console.error("Failed to fetch unlocked:", err));
 
-  fetch("/api/incorrect")
+  fetch(`/api/incorrect${friendId ? '?user_id=' + friendId : ''}`)
     .then(res => res.json())
     .then(data => {
       incorrectData = data.tricky_colors;
@@ -60,9 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Function to fetch unlocked color data
-function fetchUnlockedData() {
-  return fetch("/api/unlocked")
-    .then(response => response.json());
+function fetchUnlockedData(friendId) {
+  let url = "/api/unlocked";
+  if (friendId) url += `?user_id=${friendId}`;
+  return fetch(url).then(response => response.json());
 }
 
 // Function to plot the graph using Plotly
