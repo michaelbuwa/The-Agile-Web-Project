@@ -102,8 +102,33 @@ def visualise():
 @app.route('/share')
 @login_required
 def share():
-    return render_template('share.html', title='Share', include_navbar=True, include_bootstrap=True)
+    # Get all users who have added the current user as a friend
+    friend_requests = Friendship.query.filter_by(friend_id=current_user.id).all()
+    requesters = [User.query.get(f.user_id) for f in friend_requests]
+    return render_template(
+        'share.html',
+        title='Share',
+        include_navbar=True,
+        include_bootstrap=True,
+        requesters=requesters  # Pass to template
+    )
 
+@app.route('/api/add_friend', methods=['POST'])
+@login_required
+def add_friend():
+    data = request.get_json()
+    username = data.get('username')
+    friend = User.query.filter_by(username=username).first()
+    if not friend or friend.id == current_user.id:
+        return jsonify({'success': False, 'message': 'Invalid user.'}), 400
+    # Prevent duplicates
+    existing = Friendship.query.filter_by(user_id=current_user.id, friend_id=friend.id).first()
+    if existing:
+        return jsonify({'success': False, 'message': 'Already friends.'}), 400
+    friendship = Friendship(user_id=current_user.id, friend_id=friend.id)
+    db.session.add(friendship)
+    db.session.commit()
+    return jsonify({'success': True})
 
 @app.route('/api/search_users')
 @login_required

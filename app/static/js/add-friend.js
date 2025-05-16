@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const addButton = document.querySelector('.search-button');
+    addButton.addEventListener('click', () => {
+        const username = input.value.trim();
+        if (!username) return;
+        fetch('/api/add_friend', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Friend added!');
+                input.value = '';
+            } else {
+                alert(data.message || 'Could not add friend.');
+            }
+        });
+    });
     const input = document.querySelector('.search-input[placeholder="add friend"]');
     const suggestionsList = document.getElementById('suggestions-list');
 
