@@ -9,7 +9,7 @@
     <div class="intro-container alt-style1">
         <div class="sign-in-container sign-up">
             <h1>Sign Up</h1>
-            <form method="POST" action="{{ url_for('sign_up') }}">
+            <form method="POST" action="{{ url_for('main.sign_up') }}">
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 {{ form.username(class="form-control form-control-lg", placeholder="Username") }}

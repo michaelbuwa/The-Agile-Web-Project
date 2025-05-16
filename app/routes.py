@@ -4,11 +4,12 @@ from sqlalchemy import func
 from flask_login import login_required, login_user, logout_user, current_user
 from app.forms import LoginForm,SignUpForm
 from app.models import User, GameResult, Friendship
-from app import app,db
+from app import db
+from app.blueprints import blueprint
 import math
 
-@app.route('/')
-@app.route('/index', methods=['GET', 'POST'])
+@blueprint.route('/')
+@blueprint.route('/index', methods=['GET', 'POST'])
 def index():
     form = LoginForm()
     if request.method == "POST":
@@ -21,10 +22,10 @@ def index():
             flash('Incorrect password','error')
         else:
             login_user(user)
-            return redirect(url_for('upload'))
+            return redirect(url_for('main.upload'))
     return render_template('index.html', title='Colour Mania', include_google_fonts=True, include_bootstrap=True,form=form)
 
-@app.route('/sign-up',methods=['GET', 'POST'])
+@blueprint.route('/sign-up',methods=['GET', 'POST'])
 def sign_up():
     form = SignUpForm()
     if request.method == "POST":
@@ -40,15 +41,15 @@ def sign_up():
             db.session.add(user)
             db.session.commit()
             login_user(user)
-            return redirect(url_for('upload'))
+            return redirect(url_for('main.upload'))
     return render_template('sign-up.html', title='Sign Up', include_bootstrap=True, form=form)
 
-@app.route("/logout")
+@blueprint.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
-@app.route('/upload')
+@blueprint.route('/upload')
 @login_required
 def upload():
     return render_template('upload.html', title='Colour Differentiation Test', include_navbar=True, body_class='upload-page')
@@ -57,7 +58,7 @@ def rgb_string_to_tuple(rgb_str):
     """Converts 'rgb(123, 45, 67)' to (123, 45, 67)"""
     return tuple(map(int, rgb_str.strip("rgb() ").split(",")))
 
-@app.route('/api/update_match', methods=['POST'])
+@blueprint.route('/api/update_match', methods=['POST'])
 @login_required
 def update_match():
     data = request.get_json()
@@ -92,7 +93,7 @@ def update_match():
 
     return jsonify({'success': True, 'correct_matches': current_user.correct_matches})
 
-@app.route('/visualise')
+@blueprint.route('/visualise')
 @login_required
 def visualise():
     user = User.query.get(current_user.id)
@@ -118,7 +119,7 @@ def visualise_friend(user_id):
         friend_id=friend.id
     )
 
-@app.route('/share')
+@blueprint.route('/share')
 @login_required
 def share():
     # Get all users who have added the current user as a friend
@@ -149,7 +150,7 @@ def add_friend():
     db.session.commit()
     return jsonify({'success': True})
 
-@app.route('/api/search_users')
+@blueprint.route('/api/search_users')
 @login_required
 def search_users():
     query = request.args.get('q', '').strip().lower()
@@ -163,7 +164,7 @@ def search_users():
 
     return jsonify([user.username for user in matching_users])
 
-@app.route('/api/unlocked', methods=['GET'])
+@blueprint.route('/api/unlocked', methods=['GET'])
 @login_required
 def get_stats():
     user_id = request.args.get('user_id', type=int) or current_user.id
@@ -194,8 +195,7 @@ def get_stats():
         'unlocked_colors': unlocked_colors,
     })
 
-
-@app.route('/api/incorrect', methods=['GET'])
+@blueprint.route('/api/incorrect', methods=['GET'])
 @login_required
 def get_incorrect():
     user_id = request.args.get('user_id', type=int) or current_user.id
@@ -229,7 +229,7 @@ def get_incorrect():
     return jsonify({'tricky_colors': colors})
 
 
-@app.route('/api/distance')
+@blueprint.route('/api/distance')
 @login_required
 def get_dist():
     pass
