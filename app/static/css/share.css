@@ -109,10 +109,9 @@ body, html {
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-style: italic;
-    color: gray; /* Placeholder color */
+    font-style: normal;
+    color: black; /* Search Input Color */
   
-    /* Remove italic + change color when user types */
   }
   .search-input:focus {
     font-style: normal;

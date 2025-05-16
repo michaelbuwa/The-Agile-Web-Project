@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
-    // Optional: Hide suggestions when clicking outside
     document.addEventListener('click', (e) => {
         if (!input.contains(e.target) && !suggestionsList.contains(e.target)) {
             suggestionsList.innerHTML = '';
