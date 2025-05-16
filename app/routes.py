@@ -99,7 +99,7 @@ def visualise():
     user = User.query.get(current_user.id)
     return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True, correct_matches=user.correct_matches)
 
-@app.route('/visualise/<int:user_id>')
+@blueprint.route('/visualise/<int:user_id>')
 @login_required
 def visualise_friend(user_id):
     # Only allow if this user is your friend (has added you)
@@ -133,7 +133,7 @@ def share():
         requesters=requesters  # Pass to template
     )
 
-@app.route('/api/add_friend', methods=['POST'])
+@blueprint.route('/api/add_friend', methods=['POST'])
 @login_required
 def add_friend():
     data = request.get_json()
