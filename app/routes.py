@@ -98,6 +98,25 @@ def visualise():
     user = User.query.get(current_user.id)
     return render_template('visualise.html', title='Data Visualisation', include_navbar=True, include_google_fonts=True, correct_matches=user.correct_matches)
 
+@app.route('/visualise/<int:user_id>')
+@login_required
+def visualise_friend(user_id):
+    # Only allow if this user is your friend (has added you)
+    friendship = Friendship.query.filter_by(friend_id=current_user.id, user_id=user_id).first()
+    if not friendship:
+        flash("You do not have permission to view this data.", 'error')
+        return redirect(url_for('share'))
+
+    friend = User.query.get_or_404(user_id)
+    return render_template(
+        'visualise.html',
+        title=f"{friend.username}'s Data Visualisation",
+        include_navbar=True,
+        include_google_fonts=True,
+        correct_matches=friend.correct_matches,
+        friend_username=friend.username,
+        friend_id=friend.id
+    )
 
 @app.route('/share')
 @login_required
@@ -147,7 +166,7 @@ def search_users():
 @app.route('/api/unlocked', methods=['GET'])
 @login_required
 def get_stats():
-    user_id = current_user.id
+    user_id = request.args.get('user_id', type=int) or current_user.id
 
     # --- Get unlocked (used) colors for this user ---
     colors = (
@@ -179,7 +198,7 @@ def get_stats():
 @app.route('/api/incorrect', methods=['GET'])
 @login_required
 def get_incorrect():
-    user_id = current_user.id
+    user_id = request.args.get('user_id', type=int) or current_user.id
 
     results = (
         db.session.query(GameResult)
