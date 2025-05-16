@@ -30,14 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Generate a similar color
-  function getSimilarColor(baseColor) {
-      const [r, g, b] = baseColor.match(/\d+/g).map(Number);
-      const variation = 20; 
-      const newR = Math.min(255, Math.max(0, r + (Math.random() > 0.5 ? variation : -variation)));
-      const newG = Math.min(255, Math.max(0, g + (Math.random() > 0.5 ? variation : -variation)));
-      const newB = Math.min(255, Math.max(0, b + (Math.random() > 0.5 ? variation : -variation)));
-      return `rgb(${newR}, ${newG}, ${newB})`;
-  }
+    function getSimilarColor(baseColor) {
+        const [r, g, b] = baseColor.match(/\d+/g).map(Number);
+
+        function randomVariation() {
+            return Math.floor(Math.random() * 61) - 30; // range: -30 to +30
+        }
+
+        const newR = Math.min(255, Math.max(0, r + randomVariation()));
+        const newG = Math.min(255, Math.max(0, g + randomVariation()));
+        const newB = Math.min(255, Math.max(0, b + randomVariation()));
+
+        return `rgb(${newR}, ${newG}, ${newB})`;
+    }
+
 
   // Start the test
   startButton.addEventListener('click', () => {
