@@ -6,7 +6,7 @@
 
 {% block content %}
 <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/test.js') }}"></script>
+<script src="{{ url_for('static', filename='js/unlock-graph.js') }}"></script>
 
 <div class="visualise-container">
   <div class="main-container">
@@ -38,12 +38,8 @@
     <!-- Bottom Right: Swatches -->
     <div id="swatches" class="container-box">
       <h2 id="label">Colours You Find Tricky</h2>
-      <div class="swatch-grid">
-        <div class="swatch" data-color="red" style="background-color: red;"></div>
-        <div class="swatch" data-color="blue" style="background-color: blue;"></div>
-        <div class="swatch" data-color="green" style="background-color: green;"></div>
-        <div class="swatch" data-color="orange" data-colour="4" style="background-color: orange;"></div>
-        <div class="swatch" data-color="purple" style="background-color: purple;"></div>
+      <div class="swatch-grid" id="swatch-grid">
+        <!-- Swatches will be inserted here dynamically -->
       </div>
     </div>
 </div>
