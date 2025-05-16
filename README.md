@@ -49,7 +49,9 @@ Finally, run our application!
 (venv) $ flask run
 ```
 ## How to Run Tests
-
+```
+python -m unittest app.tests.unit-tests
+```
 
 ## Acknowledgements
 AI tools ChatGPT and GitHub Copilot were used for assistance in suggesting model designs, routing and JS logic for DOM Manipulation (OpenAI, 2025).
