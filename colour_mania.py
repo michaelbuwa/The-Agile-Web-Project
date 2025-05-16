@@ -4,7 +4,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app.models import User, GameResult, Friendship
 
-app = create_application(DeploymentConfig)  # <-- Create the app instance
+app = create_application(DeploymentConfig)  
 
 @app.shell_context_processor
 def make_shell_context():
