@@ -108,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   colorOptions.addEventListener('click', (e) => {
     if (e.target.classList.contains('color-container')) {
+        const selectedColor = e.target.dataset.color;
         // Remove the 'selected' class from all containers
         document.querySelectorAll('.color-container').forEach(container => {
             container.classList.remove('selected');
@@ -119,7 +120,27 @@ document.addEventListener('DOMContentLoaded', () => {
         // Disable further clicks on the color options
         colorOptions.style.pointerEvents = 'none';
 
-        const selectedColor = e.target.dataset.color;
+        // Determine if the match is correct
+        const isCorrect = selectedColor === correctColor;
+
+        // Send the result to the backend
+        fetch('/api/update_match', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                is_correct: isCorrect,
+                selected_color: selectedColor,
+                correct_color: correctColor
+        }),
+
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Match result updated:', data);
+        })
+        .catch(err => console.error('Error updating match result:', err));
 
         if (selectedColor === correctColor) {
             correctGuesses++; // Increment the correct colour counter

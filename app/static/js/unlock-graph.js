@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Fetch data for the graph
-  fetch("/api/stats")
+  fetch("/api/unlocked")
     .then(response => response.json())
     .then(data => {
       const { unlocked_colors, accuracy_table } = data;
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const unlockedCount = document.getElementById("unlocked-count");
       if (unlockedCount) unlockedCount.textContent = unlocked_colors.length;
     })
-    .catch(err => console.error("Failed to fetch stats:", err));
+    .catch(err => console.error("Failed to fetch unlocked:", err));
 
   // New functionality: Handle swatch clicks
   const swatches = document.querySelectorAll(".swatch");
@@ -57,3 +57,30 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 });
+
+
+fetch("/api/incorrect")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then(data => {
+    const trickyColors = data.tricky_colors;
+
+    trickyColors.forEach(entry => {
+      const { correct, selected, distance } = entry;
+
+      console.log("Correct colour:", correct);
+      console.log("User selected:", selected);
+      console.log("Distance:", distance.toFixed(2));
+      
+      // Example: do something with each pair
+      // You can add them to the DOM, generate swatches, etc.
+    });
+  })
+  .catch(error => {
+    console.error("Error fetching /api/incorrect:", error);
+  });
+

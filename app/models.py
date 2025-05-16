@@ -6,17 +6,30 @@ from app.extensions import login
 # The table to store a list of users and their details
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    password_hash = db.Column(db.String(128), nullable=False)
+    correct_matches = db.Column(db.Integer, default=0)
 
-    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(80), nullable=False, unique=True)
-    email = db.Column(db.String(120), unique=True)
-    birth_year = db.Column(db.Integer)
-    nationality = db.Column(db.String(100))
-    colour_blindness = db.Column(db.String(100))
-    password_hash = db.Column(db.String(128))
+    game_results = db.relationship('GameResult', backref='user', lazy=True)
+    # One-to-many: this user "owns" these friendship entries
+    # Sent friendships: this user sent the request
+    sent_friendships = db.relationship(
+        'Friendship',
+        foreign_keys='Friendship.user_id',
+        backref='requester',
+        lazy='dynamic',
+        cascade='all, delete-orphan'
+    )
 
-    # Relationship to Results
-    results = db.relationship('Result', backref='user', cascade="all, delete-orphan", lazy=True)
+    # Received friendships: this user received the request
+    received_friendships = db.relationship(
+        'Friendship',
+        foreign_keys='Friendship.friend_id',
+        backref='recipient',
+        lazy='dynamic',
+        cascade='all, delete-orphan'
+    )
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -25,19 +38,28 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def get_id(self):
-        return str(self.user_id)
+        return str(self.id)
 
 
 @login.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(id):
+    return User.query.get(id)
 
 # The table of each result everyone gets
-class Result(db.Model):
-    __tablename__ = 'results'
+class GameResult(db.Model, UserMixin):
+    __tablename__ = 'game_results'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    correct_color= db.Column(db.String(20), nullable=False)
+    selected_color= db.Column(db.String(20), nullable=False)
+    is_correct = db.Column(db.Boolean, nullable=False)
+    euclidean_distance = db.Column(db.Float) # Null for correct answers
 
-    result_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id', ondelete='CASCADE'), nullable=False)
-    colour = db.Column(db.String(20), nullable=False)  # storing as "255,255,255"
-    distance = db.Column(db.Float, nullable=False)
-    correct = db.Column(db.Boolean, nullable=False)
+class Friendship(db.Model, UserMixin):
+    __tablename__ = 'friendships'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # owner
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # the added friend
+
+    user = db.relationship('User', foreign_keys=[user_id])
+    friend = db.relationship('User', foreign_keys=[friend_id])
